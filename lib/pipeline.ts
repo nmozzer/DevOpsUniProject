@@ -1,3 +1,4 @@
+import { PipelineStage } from './stage';
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { CodePipeline, CodePipelineSource, ShellStep } from 'aws-cdk-lib/pipelines';
@@ -16,5 +17,6 @@ export class PipelineStack extends cdk.Stack {
             }),
         });
 
+        pipeline.addStage(new PipelineStage(this, 'beta', {}));
     }
 }
