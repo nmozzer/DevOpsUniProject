@@ -20,7 +20,7 @@ export class PipelineStack extends cdk.Stack {
         const beta = pipeline.addStage(new PipelineStage(this, 'beta', {}));
         beta.addPre(
             new ShellStep('IntegTest', {
-                commands: ['npm run test'],
+                commands: ['npm run install', 'npm run test'],
             }),
         );
     }
