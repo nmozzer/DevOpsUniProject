@@ -4,7 +4,7 @@ import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
 
 const app = new cdk.App();
-new PipelineStack(app, 'MyPipelineStack', {
+new PipelineStack(app, 'DevOpsPipelineStack', {
     env: {
         account: '431367909633',
         region: 'eu-west-1',

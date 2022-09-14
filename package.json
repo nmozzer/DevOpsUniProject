@@ -4,8 +4,10 @@
     "bin": {
         "infrastructure": "bin/infrastructure.js"
     },
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
     "scripts": {
-        "build": "tsc --build",
+        "build": "tsc",
         "watch": "tsc -w",
         "test": "jest",
         "cdk": "cdk",
@@ -27,7 +29,7 @@
         "typescript": "~3.9.7"
     },
     "dependencies": {
-        "aws-cdk-lib": "2.34.2",
+        "aws-cdk-lib": "2.24.0",
         "constructs": "^10.0.0",
         "source-map-support": "^0.5.21"
     }
