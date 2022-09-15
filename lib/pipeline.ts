@@ -28,7 +28,7 @@ export class PipelineStack extends cdk.Stack {
 
         const beta = pipeline.addStage(new PipelineStage(this, 'Beta', {}));
         beta.addPre(
-            new ShellStep('Test', {
+            new ShellStep('Beta', {
                 input: CodePipelineSource.gitHub(GITHUB_SOURCE_REPO, 'main'),
                 commands: ['npm ci', 'npm run test'],
             }),
@@ -36,7 +36,7 @@ export class PipelineStack extends cdk.Stack {
 
         const prod = pipeline.addStage(new PipelineStage(this, 'Prod', {}));
         prod.addPre(
-            new ShellStep('Test', {
+            new ShellStep('Prod', {
                 input: CodePipelineSource.gitHub(GITHUB_SOURCE_REPO, 'main'),
                 commands: ['npm ci', 'npm run test'],
             }),
