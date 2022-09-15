@@ -2,14 +2,17 @@ import { PipelineStage } from './stage';
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { CodePipeline, CodePipelineSource, ShellStep } from 'aws-cdk-lib/pipelines';
+import { Stage, STAGES } from './types';
 
 const GITHUB_SOURCE_REPO = 'nmozzer/DevOpsUniProject';
 
 export class PipelineStack extends cdk.Stack {
+    private pipeline: CodePipeline;
+
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
         super(scope, id, props);
 
-        const pipeline = new CodePipeline(this, 'Pipeline', {
+        this.pipeline = new CodePipeline(this, 'Pipeline', {
             pipelineName: 'DevOpsAssignmentPipeline',
             synth: new ShellStep('Synth', {
                 input: CodePipelineSource.gitHub(GITHUB_SOURCE_REPO, 'main'),
@@ -17,25 +20,23 @@ export class PipelineStack extends cdk.Stack {
             }),
         });
 
-        const test = pipeline.addStage(new PipelineStage(this, 'Test', {}));
-        test.addPre(
-            new ShellStep('Test', {
-                commands: ['npm ci', 'npm run integ-test'],
+        STAGES.forEach((stage) => this.setupStage(stage));
+    }
+
+    setupStage(stage: Stage): void {
+        const pipelineStage = this.pipeline.addStage(new PipelineStage(this, stage, {}));
+        pipelineStage.addPre(
+            new ShellStep(`Test${stage}`, {
+                commands: ['npm ci', stage === 'Test' ? 'npm run test-integration' : 'npm run test'],
             }),
         );
 
-        const beta = pipeline.addStage(new PipelineStage(this, 'Beta', {}));
-        beta.addPre(
-            new ShellStep('TestBeta', {
-                commands: ['npm ci', 'npm run test'],
-            }),
-        );
-
-        const prod = pipeline.addStage(new PipelineStage(this, 'Prod', {}));
-        prod.addPre(
-            new ShellStep('TestProd', {
-                commands: ['npm ci', 'npm run test'],
-            }),
-        );
+        if (stage !== 'Test') {
+            pipelineStage.addPost(
+                new ShellStep('HealthCheck', {
+                    commands: ['node bin/checks.ts'],
+                }),
+            );
+        }
     }
 }
