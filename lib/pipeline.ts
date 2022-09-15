@@ -26,14 +26,14 @@ export class PipelineStack extends cdk.Stack {
 
         const beta = pipeline.addStage(new PipelineStage(this, 'Beta', {}));
         beta.addPre(
-            new ShellStep('Beta', {
+            new ShellStep('TestBeta', {
                 commands: ['npm ci', 'npm run test'],
             }),
         );
 
         const prod = pipeline.addStage(new PipelineStage(this, 'Prod', {}));
         prod.addPre(
-            new ShellStep('Prod', {
+            new ShellStep('TestProd', {
                 commands: ['npm ci', 'npm run test'],
             }),
         );
