@@ -17,9 +17,26 @@ export class PipelineStack extends cdk.Stack {
             }),
         });
 
-        const beta = pipeline.addStage(new PipelineStage(this, 'beta', {}));
+
+        const test = pipeline.addStage(new PipelineStage(this, 'Test', {}));
+        test.addPre(
+            new ShellStep('Test', {
+                input: CodePipelineSource.gitHub(GITHUB_SOURCE_REPO, 'main'),
+                commands: ['npm ci', 'npm run integ-test'],
+            }),
+        );
+
+        const beta = pipeline.addStage(new PipelineStage(this, 'Beta', {}));
         beta.addPre(
-            new ShellStep('IntegTest', {
+            new ShellStep('Test', {
+                input: CodePipelineSource.gitHub(GITHUB_SOURCE_REPO, 'main'),
+                commands: ['npm ci', 'npm run test'],
+            }),
+        );
+
+        const prod = pipeline.addStage(new PipelineStage(this, 'Prod', {}));
+        prod.addPre(
+            new ShellStep('Test', {
                 input: CodePipelineSource.gitHub(GITHUB_SOURCE_REPO, 'main'),
                 commands: ['npm ci', 'npm run test'],
             }),
