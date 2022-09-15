@@ -3,7 +3,7 @@ interface Config {
     region: string;
 }
 
-const CONFIG = {
-    account: 431367909633,
+export const CONFIG: Config = {
+    account: '431367909633',
     region: 'eu-west-1',
 };
