@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "outDir": "dist",
+        "module": "commonjs",
+        "sourceMap": true,
+        "target": "ES2018",
+        "declaration": true,
+        "jsx": "react",
+        "lib": ["es2016", "dom"],
+        "noUnusedLocals": true,
+        "strictNullChecks": true,
+        "esModuleInterop": true
+    },
+    "exclude": ["node_modules", "dist", "tst"]
+}

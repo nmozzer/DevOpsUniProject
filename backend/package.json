@@ -1,0 +1,39 @@
+{
+    "name": "backend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "test": "jest",
+        "lint": "eslint -c .eslintrc.json --format stylish && prettier --check '{src,tst}/**/*.ts'",
+        "lint-fix": "eslint --fix -c .eslintrc --format stylish && prettier --write '{src,tst}/**/*.ts'"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/jest": "^29.0.3",
+        "@types/node": "^18.7.18",
+        "@types/prettier": "^2.7.0",
+        "@typescript-eslint/eslint-plugin": "^5.37.0",
+        "@typescript-eslint/parser": "^5.37.0",
+        "eslint": "^8.23.1",
+        "prettier": "^2.7.1",
+        "ts-jest": "^29.0.1",
+        "ts-node": "^10.9.1",
+        "typescript": "^4.8.3"
+    },
+    "prettier": {
+        "printWidth": 120,
+        "tabWidth": 4,
+        "trailingComma": "all",
+        "semi": true,
+        "singleQuote": true
+    },
+    "jest": {
+        "preset": "ts-jest",
+        "verbose": true,
+        "testEnvironment": "node"
+    }
+}
