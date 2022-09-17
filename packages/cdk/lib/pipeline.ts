@@ -16,7 +16,7 @@ export class PipelineStack extends cdk.Stack {
             pipelineName: 'DevOpsAssignmentPipeline',
             synth: new ShellStep('Synth', {
                 input: CodePipelineSource.gitHub(GITHUB_SOURCE_REPO, 'main'),
-                commands: ['npm run test', 'npm run build', 'npm cdk-synth'],
+                commands: ['npm ci', 'npm run test', 'npm run build', 'npm cdk-synth'],
             }),
         });
 
@@ -27,7 +27,7 @@ export class PipelineStack extends cdk.Stack {
         const pipelineStage = this.pipeline.addStage(new PipelineStage(this, stage, {}));
         pipelineStage.addPre(
             new ShellStep(`Test${stage}`, {
-                commands: ['npm run build', stage === 'Test' ? 'npm run test' : 'npm run test'],
+                commands: ['npm ci', stage === 'Test' ? 'npm run test-integration' : 'npm run test'],
             }),
         );
 

@@ -4,6 +4,8 @@
     "description": "",
     "scripts": {
         "build": "lerna run build --stream",
+        "bootstrap": "lerna bootstrap",
+        "install-all": "lerna run ci",
         "clean": "rm -rf ./node_modules ./build/* packages/*/node_modules packages/*/dist",
         "lerna:lint": "lerna run lint --stream --parallel",
         "lerna:prettier": "lerna run prettier --stream --parallel",

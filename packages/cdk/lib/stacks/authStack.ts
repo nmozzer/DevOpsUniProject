@@ -11,7 +11,7 @@ export class AuthStack extends cdk.Stack {
 
         this.userPool = new cognito.UserPool(this, 'FFUserPool', {
             userPoolName: 'FFUserPool',
-            selfSignUpEnabled: true,
+            selfSignUpEnabled: false,
         });
 
         this.userPoolWebClient = this.userPool.addClient('UserPoolWebClient', {
