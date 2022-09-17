@@ -24,7 +24,7 @@ export class BackendStack extends Stack {
 
         const routingLambda = new lambda.Function(this, 'RoutingLambda', {
             runtime: lambda.Runtime.NODEJS_14_X,
-            code: new lambda.AssetCode('backend'),
+            code: new lambda.AssetCode('packages/backend'),
             handler: 'dist/index.handler',
             environment: {
                 FF_TABLE: ffTable.tableName,
