@@ -8,6 +8,6 @@ export class PipelineStage extends Stage {
         super(scope, id, props);
 
         const { userPool } = new AuthStack(this, 'DevOpsAuthStack');
-        const backend = new BackendStack(this, 'DevOpsBackend', { userPool });
+        const backend = new BackendStack(this, 'DevOpsBackend', { userPool, assetRoute: '../backend' });
     }
 }

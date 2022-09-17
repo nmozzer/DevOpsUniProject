@@ -8,6 +8,7 @@ import { IUserPool } from 'aws-cdk-lib/aws-cognito';
 
 interface Props extends StackProps {
     userPool: IUserPool;
+    assetRoute: string;
 }
 
 export class BackendStack extends Stack {
@@ -16,7 +17,7 @@ export class BackendStack extends Stack {
     constructor(scope: Construct, id: string, props: Props) {
         super(scope, id, props);
 
-        const { userPool } = props;
+        const { userPool, assetRoute } = props;
 
         const ffTable = new dynamodb.Table(this, 'FFTable', {
             partitionKey: { name: 'PK', type: dynamodb.AttributeType.STRING },
@@ -24,7 +25,7 @@ export class BackendStack extends Stack {
 
         const routingLambda = new lambda.Function(this, 'RoutingLambda', {
             runtime: lambda.Runtime.NODEJS_14_X,
-            code: new lambda.AssetCode('../backend'),
+            code: new lambda.AssetCode(assetRoute),
             handler: 'dist/index.handler',
             environment: {
                 FF_TABLE: ffTable.tableName,
