@@ -1,0 +1,30 @@
+{
+    "name": "infrastructure",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+        "build": "lerna run build --stream",
+        "clean": "rm -rf ./node_modules ./build/* packages/*/node_modules packages/*/dist",
+        "lerna:lint": "lerna run lint --stream --parallel",
+        "lerna:prettier": "lerna run prettier --stream --parallel",
+        "lerna:test": "lerna run test --stream --parallel",
+        "lint": "prettier --check 'packages/*/{src,tst}/**/*'",
+        "prettier": "prettier --write 'packages/*/{src,tst}/**/*'",
+        "release": "npm run build && npm run lint && npm run test",
+        "tsc": "tsc",
+        "test": "jest",
+        "test-watch": "jest --watchAll"
+    },
+    "devDependencies": {
+        "@types/jest": "^27.0.0",
+        "@types/jest-when": "^2.7.2",
+        "@types/node": "^15.12.0",
+        "jest": "^27.0.4",
+        "jest-when": "^3.3.1",
+        "lerna": "^4.0.0",
+        "merge-deep": "^3.0.3",
+        "prettier": "^2.3.0",
+        "ts-jest": "^27.0.2",
+        "typescript": "^4.3.2"
+    }
+}

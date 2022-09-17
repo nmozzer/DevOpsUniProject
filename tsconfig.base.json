@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+    "target": "es2019",
+    "esModuleInterop": true,
+    "lib": ["dom", "es2019"],
+    "rootDir": "./",
+    "module": "commonjs",
+    "sourceMap": true,
+    "declaration": true,
+    "jsx": "react",
+    "noUnusedLocals": true,
+    "strictNullChecks": true
+   },
+  "include": ["packages/**/src/**/*.ts", "packages/**/tst/**/*.ts"],
+  "exclude": [
+    "../../node_modules",
+    "../../dist",
+    "../../build",
+    "../../tst"
+  ]
+}
