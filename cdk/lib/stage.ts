@@ -7,7 +7,7 @@ export class PipelineStage extends Stage {
     constructor(scope: Construct, id: string, props?: StageProps) {
         super(scope, id, props);
 
-        new BackendStack(this, 'DevOpsInfraStack');
-        new AuthStack(this, 'DevOpsAuthStack');
+        const { userPool } = new AuthStack(this, 'DevOpsAuthStack');
+        const backend = new BackendStack(this, 'DevOpsBackend', { userPool });
     }
 }
