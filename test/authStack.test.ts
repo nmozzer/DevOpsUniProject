@@ -1,4 +1,4 @@
-import { AuthStack } from './../lib/authStack';
+import { AuthStack } from '../lib/stacks/authStack';
 import { App } from 'aws-cdk-lib';
 import { Template } from 'aws-cdk-lib/assertions';
 
