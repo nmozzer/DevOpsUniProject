@@ -24,6 +24,7 @@ export class PipelineStack extends cdk.Stack {
                     'npm run test',
                     'npm run cdk-synth',
                 ],
+                primaryOutputDirectory: 'packages/cdk/cdk.out',
             }),
         });
 
