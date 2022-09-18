@@ -2,21 +2,25 @@ import React from 'react';
 import './css/App.css';
 import LandingPage from './components/LandingPage';
 import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
+import MainPage from './components/MainPage';
 
 function App() {
     return (
         <React.Fragment>
             <Router>
                 <div className="flex flex-col">
-                    <AppBar position="fixed">
+                    <AppBar position="sticky">
                         <Toolbar variant="dense" className="flex justify-between flex-row items-start">
                             <div className="flex">
                                 <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
                                     <MenuIcon />
                                 </IconButton>
                                 <Typography variant="h6" color="inherit" component="div" className="p-2">
+                                    <Link to="/" className="pr-1">
+                                        Home
+                                    </Link>
                                     <Link to="/ideas">Enter</Link>
                                 </Typography>
                             </div>
@@ -26,9 +30,12 @@ function App() {
                                 </Typography>
                             </div>
                         </Toolbar>
-                        <LandingPage />
                     </AppBar>
                 </div>
+                <Routes>
+                    <Route path="/" element={<LandingPage />} />
+                    <Route path="/ideas" element={<MainPage />} />
+                </Routes>
             </Router>
         </React.Fragment>
     );
