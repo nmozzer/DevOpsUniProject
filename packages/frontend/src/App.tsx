@@ -10,9 +10,9 @@ function App() {
     return (
         <React.Fragment>
             <Router>
-                <div className="flex flex-col">
+                <div className="flex flex-col bg-pink-500">
                     <AppBar position="sticky">
-                        <Toolbar variant="dense" className="flex justify-between flex-row items-start">
+                        <Toolbar variant="dense" className="flex justify-between flex-row items-start bg-pink-500">
                             <div className="flex">
                                 <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
                                     <MenuIcon />
