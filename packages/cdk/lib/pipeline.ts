@@ -6,12 +6,6 @@ import { Stage, STAGES } from './types';
 
 const GITHUB_SOURCE_REPO = 'nmozzer/DevOpsUniProject';
 
-const ENV: Record<string, string> = {
-    AWS_ACCOUNT_ID: '431367909633',
-    AWS_DEFAULT_REGION: 'eu-west-1',
-    AWS_HOSTED_ZONE_NAME: 'nicksjm.people.amazon.dev',
-};
-
 export class PipelineStack extends cdk.Stack {
     private pipeline: CodePipeline;
 
@@ -31,7 +25,6 @@ export class PipelineStack extends cdk.Stack {
                     'npm run cdk-synth',
                 ],
                 primaryOutputDirectory: 'packages/cdk/cdk.out',
-                env: ENV,
             }),
         });
 
@@ -43,7 +36,6 @@ export class PipelineStack extends cdk.Stack {
         pipelineStage.addPre(
             new ShellStep(`Test${stage}`, {
                 commands: ['npm ci', stage === 'Test' ? 'npm run test-integration' : 'npm run test'],
-                env: ENV,
             }),
         );
 
@@ -51,7 +43,6 @@ export class PipelineStack extends cdk.Stack {
             pipelineStage.addPost(
                 new ShellStep('HealthCheck', {
                     commands: ['node bin/checks.ts'],
-                    env: ENV,
                 }),
             );
         }
