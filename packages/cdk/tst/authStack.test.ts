@@ -8,7 +8,7 @@ describe('AuthStack', () => {
         const stack = new AuthStack(app, 'Test', { stage: 'Test' });
 
         Template.fromStack(stack).hasResourceProperties('AWS::Cognito::UserPool', {
-            UserPoolName: 'FFUserPool',
+            UserPoolName: 'TestFFUserPool',
         });
     });
 });
