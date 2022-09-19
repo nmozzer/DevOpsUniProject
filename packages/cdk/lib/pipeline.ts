@@ -35,7 +35,13 @@ export class PipelineStack extends cdk.Stack {
         const pipelineStage = this.pipeline.addStage(new PipelineStage(this, stage, {}));
         pipelineStage.addPre(
             new ShellStep(`Test${stage}`, {
-                commands: ['npm ci', stage === 'Test' ? 'npm run test' : 'npm run test'],
+                commands: [
+                    'npm ci',
+                    'npm run bootstrap',
+                    'npm run install-all',
+                    'npm run build',
+                    stage === 'Test' ? 'npm run test' : 'npm run test',
+                ],
             }),
         );
 
