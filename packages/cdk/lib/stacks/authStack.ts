@@ -12,6 +12,23 @@ export class AuthStack extends cdk.Stack {
         this.userPool = new cognito.UserPool(this, 'FFUserPool', {
             userPoolName: 'FFUserPool',
             selfSignUpEnabled: false,
+            signInAliases: {
+                email: true,
+                username: true,
+            },
+            passwordPolicy: {
+                minLength: 8,
+                requireDigits: false,
+                requireLowercase: false,
+                requireSymbols: false,
+                requireUppercase: false,
+            },
+            userVerification: {
+                emailSubject: 'DevOpsAssignment: Your verification code is {####}',
+                emailBody: `Your verification code is {####}`,
+                emailStyle: cognito.VerificationEmailStyle.CODE,
+                smsMessage: 'DevOpsAssignment: Your verification code is {####}',
+            },
         });
 
         this.userPoolWebClient = this.userPool.addClient('UserPoolWebClient', {
