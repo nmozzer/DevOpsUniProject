@@ -7,24 +7,20 @@ import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as s3Deployment from 'aws-cdk-lib/aws-s3-deployment';
 import { Construct } from 'constructs';
 
-interface StackProps extends cdk.StackProps {
+interface UIStackProps extends cdk.StackProps {
     domainName: string;
     hostedZoneName: string;
-    apiDomainName: string;
-    env: cdk.Environment;
 }
 
 export class UIStack extends cdk.Stack {
     private domainName: string;
     private hostedZoneName: string;
-    private apiDomainName: string;
 
-    constructor(scope: Construct, id: string, props: StackProps) {
+    constructor(scope: Construct, id: string, props: UIStackProps) {
         super(scope, id, props);
 
         this.domainName = props.domainName;
         this.hostedZoneName = props.hostedZoneName;
-        this.apiDomainName = props.apiDomainName;
 
         const assetsBucket = new s3.Bucket(this, 'AssetBucket', {
             bucketName: this.domainName,
@@ -52,7 +48,7 @@ export class UIStack extends cdk.Stack {
         };
 
         const apiOriginConfig: cloudfront.SourceConfiguration = {
-            customOriginSource: { domainName: this.apiDomainName },
+            customOriginSource: { domainName: this.domainName },
             behaviors: [
                 {
                     pathPattern: '/api/*',

@@ -3,6 +3,7 @@ import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { CodePipeline, CodePipelineSource, ShellStep } from 'aws-cdk-lib/pipelines';
 import { Stage, STAGES } from './types';
+import { CONFIG } from './config';
 
 const GITHUB_SOURCE_REPO = 'nmozzer/DevOpsUniProject';
 
@@ -32,7 +33,15 @@ export class PipelineStack extends cdk.Stack {
     }
 
     setupStage(stage: Stage): void {
-        const pipelineStage = this.pipeline.addStage(new PipelineStage(this, stage, {}));
+        const { hostedZoneName, hostedZoneId } = CONFIG;
+        const pipelineStage = this.pipeline.addStage(
+            new PipelineStage(this, stage, {
+                stage: stage,
+                hostedZoneId: hostedZoneId,
+                hostedZoneName: hostedZoneName,
+                domainName: `${stage}.dev-ops-assignment.${hostedZoneName}`,
+            }),
+        );
         pipelineStage.addPre(
             new ShellStep(`Test${stage}`, {
                 commands: [
