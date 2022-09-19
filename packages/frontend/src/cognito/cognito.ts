@@ -29,16 +29,13 @@ export const getUserByUsername = (username: string): CognitoUser => {
 
 export const getSession = async (): Promise<void> => {
     const user = getCurrentUser();
-    try {
-        return await user?.getSession((error: any, session: CognitoUserSession) => {
-            if (error) {
-                throw new Error(error.message);
-            }
-            return session;
-        });
-    } catch (error) {
-        throw error;
-    }
+
+    return await user?.getSession((error: any, session: CognitoUserSession) => {
+        if (error) {
+            throw new Error(error.message);
+        }
+        return session;
+    });
 };
 
 export const signUpWithEmail = async ({ username, password, email }: SignUpProps): Promise<void> => {
@@ -49,16 +46,12 @@ export const signUpWithEmail = async ({ username, password, email }: SignUpProps
         }),
     ];
 
-    try {
-        await userPool.signUp(username, password, attributes, [], (error: any, result?: ISignUpResult) => {
-            if (error) {
-                throw new Error(error.message);
-            }
-            return result;
-        });
-    } catch (error) {
-        throw error;
-    }
+    await userPool.signUp(username, password, attributes, [], (error: any, result?: ISignUpResult) => {
+        if (error) {
+            throw new Error(error.message);
+        }
+        return result;
+    });
 };
 
 export const signIn = async (username: string, password: string): Promise<void> => {
@@ -68,21 +61,15 @@ export const signIn = async (username: string, password: string): Promise<void> 
     });
 
     const user = await getUserByUsername(username);
-    try {
-        await user.authenticateUser(authDetails, {
-            onSuccess: (result: any) => {
-                return result;
-            },
-            onFailure: (error: Error) => {
-                throw new Error(error.message);
-            },
-        });
-    } catch (error) {
-        if (typeof error === 'string') {
-            throw new Error(error);
-        }
-        throw new Error('Unable to authenticate');
-    }
+
+    await user.authenticateUser(authDetails, {
+        onSuccess: (result: any) => {
+            return result;
+        },
+        onFailure: (error: Error) => {
+            throw new Error(error.message);
+        },
+    });
 };
 
 export const signOut = async (): Promise<void> => {
@@ -94,59 +81,37 @@ export const signOut = async (): Promise<void> => {
 export const verifyVerificationCode = async (username: string, code: string): Promise<void> => {
     const user = await getUserByUsername(username);
 
-    try {
-        await user.confirmRegistration(code, true, (error: Error, result: any) => {
-            if (error) {
-                throw new Error(error.message);
-            }
-            return result;
-        });
-    } catch (error) {
-        if (typeof error === 'string') {
-            throw new Error(error);
+    await user.confirmRegistration(code, true, (error: Error, result: any) => {
+        if (error) {
+            throw new Error(error.message);
         }
-        throw new Error('Unable to verify code');
-    }
+        return result;
+    });
 };
 
 export const getAttributes = async (): Promise<void> => {
     const user = await getCurrentUser();
 
-    try {
-        return await user?.getUserAttributes((error?: Error, attributes?: CognitoUserAttribute[]) => {
-            if (error) {
-                throw new Error(error.message);
-            }
-
-            return attributes;
-        });
-    } catch (error) {
-        if (typeof error === 'string') {
-            throw new Error(error);
+    return await user?.getUserAttributes((error?: Error, attributes?: CognitoUserAttribute[]) => {
+        if (error) {
+            throw new Error(error.message);
         }
-        throw new Error('Unable to get user attributes');
-    }
+
+        return attributes;
+    });
 };
 
 export const setAttribute = async (attribute: CognitoUserAttribute): Promise<void> => {
     const newAttribute = [new CognitoUserAttribute(attribute)];
-
     const user = await getCurrentUser();
 
-    try {
-        return await user?.updateAttributes(newAttribute, (error?: Error, result?: string) => {
-            if (error) {
-                throw new Error(error.message);
-            }
-
-            return result!;
-        });
-    } catch (error) {
-        if (typeof error === 'string') {
-            throw new Error(error);
+    return await user?.updateAttributes(newAttribute, (error?: Error, result?: string) => {
+        if (error) {
+            throw new Error(error.message);
         }
-        throw new Error('Unable to set user attributes');
-    }
+
+        return result!;
+    });
 };
 
 export const sendCode = async (username: string) => {
@@ -156,21 +121,14 @@ export const sendCode = async (username: string) => {
         throw new Error('No user found');
     }
 
-    try {
-        await user.forgotPassword({
-            onSuccess: (data: any) => {
-                return data;
-            },
-            onFailure: (error: Error) => {
-                throw new Error('Failed to call API forgotPassword');
-            },
-        });
-    } catch (error) {
-        if (typeof error === 'string') {
-            throw new Error(error);
-        }
-        throw new Error('Unable to send code');
-    }
+    await user.forgotPassword({
+        onSuccess: (data: any) => {
+            return data;
+        },
+        onFailure: (error: Error) => {
+            throw new Error('Failed to call API forgotPassword');
+        },
+    });
 };
 
 export const forgotPassword = async (username: string, code: string, password: string): Promise<void> => {
@@ -180,22 +138,15 @@ export const forgotPassword = async (username: string, code: string, password: s
         throw new Error('No user found');
     }
 
-    try {
-        await user.confirmPassword(code, password, {
-            onSuccess: (data: any) => {
-                console.log('Password updated successfully');
-                return data;
-            },
-            onFailure: (error: Error) => {
-                throw new Error('Failed to confirm lost password');
-            },
-        });
-    } catch (error) {
-        if (typeof error === 'string') {
-            throw new Error(error);
-        }
-        throw new Error('Unable to change password');
-    }
+    await user.confirmPassword(code, password, {
+        onSuccess: (data: any) => {
+            console.log('Password updated successfully');
+            return data;
+        },
+        onFailure: (error: Error) => {
+            throw new Error('Failed to confirm lost password');
+        },
+    });
 };
 
 export const changePassword = async (newPassword: string, oldPassword: string) => {
@@ -205,18 +156,11 @@ export const changePassword = async (newPassword: string, oldPassword: string) =
         throw new Error('No current user');
     }
 
-    try {
-        await user.changePassword(oldPassword, newPassword, (error?: Error, result?: 'SUCCESS') => {
-            if (error) {
-                throw new Error(error.message);
-            }
-
-            return result;
-        });
-    } catch (error) {
-        if (typeof error === 'string') {
-            throw new Error(error);
+    await user.changePassword(oldPassword, newPassword, (error?: Error, result?: 'SUCCESS') => {
+        if (error) {
+            throw new Error(error.message);
         }
-        throw new Error('Unable to change password');
-    }
+
+        return result;
+    });
 };
