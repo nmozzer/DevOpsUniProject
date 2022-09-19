@@ -5,6 +5,7 @@ import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import MainPage from './components/MainPage';
+import { SignIn } from './components/auth/routes/SignIn';
 
 function App() {
     return (
@@ -35,6 +36,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<LandingPage />} />
                     <Route path="/ideas" element={<MainPage />} />
+                    <Route path="/signIn" element={<SignIn />} />
                 </Routes>
             </Router>
         </React.Fragment>

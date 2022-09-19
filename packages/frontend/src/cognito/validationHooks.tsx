@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export const validateEmail = (initialValue: string) => {
+export const useValidateEmail = (initialValue: string) => {
     const [email, setEmail] = useState(initialValue);
     const [emailIsValid, setEmailIsValid] = useState(true);
 
@@ -18,7 +18,7 @@ export const validateEmail = (initialValue: string) => {
     return { email, setEmail, emailIsValid };
 };
 
-export const validatePassword = (initialValue: string) => {
+export const useValidatePassword = (initialValue: string) => {
     const [password, setPassword] = useState(initialValue);
     const [passwordIsValid, setPasswordIsValid] = useState(true);
 
@@ -36,7 +36,7 @@ export const validatePassword = (initialValue: string) => {
     return { password, setPassword, passwordIsValid };
 };
 
-export const validateUsername = (initialValue: string) => {
+export const useValidateUsername = (initialValue: string) => {
     const [username, setUsername] = useState(initialValue);
     const [usernameIsValid, setUsernameIsValid] = useState(true);
 
@@ -54,7 +54,7 @@ export const validateUsername = (initialValue: string) => {
     return { username, setUsername, usernameIsValid };
 };
 
-export const validateVerificationCode = (initialValue: string) => {
+export const useValidateVerificationCode = (initialValue: string) => {
     const [code, setCode] = useState(initialValue);
     const [codeIsValid, setCodeIsValid] = useState(true);
 

@@ -75,8 +75,10 @@ export const signIn = async (username: string, password: string): Promise<void> 
 export const signOut = async (): Promise<void> => {
     const user = await getCurrentUser();
 
-    if (user) user.signOut;
-};
+    if (user) {
+        user.signOut();
+    }
+};;
 
 export const verifyVerificationCode = async (username: string, code: string): Promise<void> => {
     const user = await getUserByUsername(username);

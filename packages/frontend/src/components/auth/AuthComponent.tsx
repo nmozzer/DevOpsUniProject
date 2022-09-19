@@ -24,3 +24,5 @@ export const AuthComponent = ({ validLabel, invalidLabel, isValid, setProp, pass
         />
     );
 };
+
+export default AuthComponent;
