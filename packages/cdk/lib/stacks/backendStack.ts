@@ -3,12 +3,15 @@ import { Construct } from 'constructs';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as apig from '@aws-cdk/aws-apigatewayv2-alpha';
+import * as apiGatewayAuthorizers from '@aws-cdk/aws-apigatewayv2-authorizers-alpha';
 import { HttpLambdaIntegration } from '@aws-cdk/aws-apigatewayv2-integrations-alpha';
-import { IUserPool } from 'aws-cdk-lib/aws-cognito';
+import { IUserPool, IUserPoolClient } from 'aws-cdk-lib/aws-cognito';
 
 interface Props extends StackProps {
     userPool: IUserPool;
+    userPoolClient: IUserPoolClient;
     assetRoute: string;
+    stage: string;
 }
 
 export class BackendStack extends Stack {
@@ -17,13 +20,13 @@ export class BackendStack extends Stack {
     constructor(scope: Construct, id: string, props: Props) {
         super(scope, id, props);
 
-        const { userPool, assetRoute } = props;
+        const { userPool, assetRoute, userPoolClient, stage } = props;
 
-        const ffTable = new dynamodb.Table(this, 'FFTable', {
+        const ffTable = new dynamodb.Table(this, `${stage}FFTable`, {
             partitionKey: { name: 'PK', type: dynamodb.AttributeType.STRING },
         });
 
-        const routingLambda = new lambda.Function(this, 'RoutingLambda', {
+        const routingLambda = new lambda.Function(this, `${stage}RoutingLambda`, {
             runtime: lambda.Runtime.NODEJS_14_X,
             code: new lambda.AssetCode(assetRoute),
             handler: 'dist/index.handler',
@@ -41,12 +44,18 @@ export class BackendStack extends Stack {
             allowOrigins: ['http://localhost:8080'],
         };
 
+        const authorizer = new apiGatewayAuthorizers.HttpUserPoolAuthorizer(`${stage}user-pool-authorizer`, userPool, {
+            userPoolClients: [userPoolClient],
+            identitySource: ['$request.header.Authorization'],
+        });
+
         const apiRoutes: apig.AddRoutesOptions = {
             path: '/api/{proxy+}',
-            integration: new HttpLambdaIntegration('APIIntegration', routingLambda, {}),
+            integration: new HttpLambdaIntegration(`${stage}APIIntegration`, routingLambda, {}),
+            authorizer,
         };
 
-        const api = new apig.HttpApi(this, 'API', { corsPreflight });
+        const api = new apig.HttpApi(this, `${stage}API`, { corsPreflight });
         api.addRoutes(apiRoutes);
 
         this.domainName = `${api.httpApiId}.execute-api.${this.region}.amazonaws.com`;

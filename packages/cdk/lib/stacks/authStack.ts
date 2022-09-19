@@ -9,7 +9,7 @@ interface AuthStackProps extends StackProps {
 
 export class AuthStack extends cdk.Stack {
     readonly userPool: cognito.IUserPool;
-    readonly userPoolWebClient: cognito.IUserPoolClient;
+    readonly userPoolClient: cognito.IUserPoolClient;
 
     constructor(scope: Construct, id: string, props: AuthStackProps) {
         super(scope, id, props);
@@ -38,7 +38,7 @@ export class AuthStack extends cdk.Stack {
             },
         });
 
-        this.userPoolWebClient = this.userPool.addClient(`${stage}UserPoolWebClient`, {
+        this.userPoolClient = this.userPool.addClient(`${stage}UserPoolWebClient`, {
             authFlows: {
                 userPassword: true,
             },
