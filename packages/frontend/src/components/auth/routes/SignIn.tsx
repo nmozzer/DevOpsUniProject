@@ -36,7 +36,7 @@ const SignIn = () => {
     };
 
     const resetPasswordOnClick = async () => {
-        navigate('/resetPassword');
+        navigate('/resendCode');
     };
 
     return (

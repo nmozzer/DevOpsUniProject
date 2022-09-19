@@ -8,6 +8,7 @@ import MainPage from './components/MainPage';
 import SignIn from './components/auth/routes/SignIn';
 import AuthProvider from './cognito/context';
 import Verify from './components/auth/routes/Verify';
+import Resend from './components/auth/routes/Resend';
 
 function App() {
     return (
@@ -41,6 +42,7 @@ function App() {
                         <Route path="/ideas" element={<MainPage />} />
                         <Route path="/signIn" element={<SignIn />} />
                         <Route path="/verify" element={<Verify />} />
+                        <Route path="/resendCode" element={<Resend />} />
                     </Routes>
                 </Router>
             </AuthProvider>
