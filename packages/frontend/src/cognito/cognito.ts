@@ -178,7 +178,9 @@ export const forgotPassword = async (username: string, code: string, password: s
                 console.log('Password updated successfully');
                 resolve(data);
             },
-            onFailure: (error: Error) => {},
+            onFailure: (error: Error) => {
+                reject(error);
+            },
         });
     }).catch((error) => {
         throw error;
