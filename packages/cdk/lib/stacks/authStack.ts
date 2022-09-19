@@ -1,16 +1,23 @@
 import { Construct } from 'constructs';
 import * as cdk from 'aws-cdk-lib';
 import * as cognito from 'aws-cdk-lib/aws-cognito';
+import { StackProps } from 'aws-cdk-lib';
+
+interface AuthStackProps extends StackProps {
+    stage: string;
+}
 
 export class AuthStack extends cdk.Stack {
     readonly userPool: cognito.IUserPool;
     readonly userPoolWebClient: cognito.IUserPoolClient;
 
-    constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+    constructor(scope: Construct, id: string, props: AuthStackProps) {
         super(scope, id, props);
 
-        this.userPool = new cognito.UserPool(this, 'FFUserPool', {
-            userPoolName: 'FFUserPool',
+        const { stage } = props;
+
+        this.userPool = new cognito.UserPool(this, `${stage}FFUserPool`, {
+            userPoolName: `${stage}FFUserPool`,
             selfSignUpEnabled: false,
             signInAliases: {
                 email: true,
@@ -31,7 +38,7 @@ export class AuthStack extends cdk.Stack {
             },
         });
 
-        this.userPoolWebClient = this.userPool.addClient('UserPoolWebClient', {
+        this.userPoolWebClient = this.userPool.addClient(`${stage}UserPoolWebClient`, {
             authFlows: {
                 userPassword: true,
                 userSrp: true,
@@ -39,14 +46,15 @@ export class AuthStack extends cdk.Stack {
             generateSecret: false,
         });
 
-        this.createUserPoolGroup('Admin');
-        this.createUserPoolGroup('User');
+        this.createUserPoolGroup('Admin', stage);
+        this.createUserPoolGroup('User', stage);
     }
 
-    private createUserPoolGroup(groupName: string) {
-        new cognito.CfnUserPoolGroup(this, groupName, {
+    private createUserPoolGroup(groupName: string, stage: string) {
+        new cognito.CfnUserPoolGroup(this, `${stage}${groupName}`, {
             userPoolId: this.userPool.userPoolId,
             groupName,
         });
     }
 }
+ 
