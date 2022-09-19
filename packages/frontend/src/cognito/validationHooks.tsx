@@ -28,7 +28,7 @@ export const useValidatePassword = (initialValue: string) => {
             return;
         }
 
-        const isValid = password.length <= 8 ? true : false;
+        const isValid = password.length >= 8 ? true : false;
 
         setPasswordIsValid(isValid);
     }, [password]);
@@ -46,7 +46,7 @@ export const useValidateUsername = (initialValue: string) => {
             return;
         }
 
-        const isValid = username.length <= 8 ? true : false;
+        const isValid = username.length >= 8 ? true : false;
 
         setUsernameIsValid(isValid);
     }, [username]);
@@ -64,7 +64,7 @@ export const useValidateVerificationCode = (initialValue: string) => {
             return;
         }
 
-        const isValid = code.length <= 6 ? true : false;
+        const isValid = code.length >= 6 ? true : false;
 
         setCodeIsValid(isValid);
     }, [code]);

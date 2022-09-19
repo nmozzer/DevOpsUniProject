@@ -1,7 +1,7 @@
 import { Paper, Box, Typography, Button } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../../cognito/context';
+import { AuthContext, AuthState } from '../../../cognito/context';
 import { useValidatePassword } from '../../../cognito/validationHooks';
 import AuthComponent from '../AuthComponent';
 
@@ -34,6 +34,13 @@ const ChangePassword = () => {
             setError(err.message);
         }
     };
+
+    useEffect(() => {
+        if (authContext.authState !== AuthState.SignedIn) {
+            alert('Must be signed in to change password');
+            navigate(-1);
+        }
+    });
 
     return (
         <div className="flex justify-center items-center h-screen flex-col">
