@@ -18,7 +18,7 @@ export interface AuthInfo {
     sessionInfo?: AuthSession;
     attrInfo?: any;
     authState: AuthState;
-    signInWithEmail?: any;
+    signIn?: any;
     signUpWithEmail?: any;
     signOut?: any;
     verifyCode?: any;
@@ -82,7 +82,7 @@ const AuthProvider = ({ children }: AuthProps) => {
         return null;
     }
 
-    const signInWithEmail = async (username: string, password: string) => {
+    const signIn = async (username: string, password: string) => {
         try {
             await cognito.signIn(username, password);
             setAuthState(AuthState.SignedIn);
@@ -169,7 +169,7 @@ const AuthProvider = ({ children }: AuthProps) => {
         sessionInfo,
         attrInfo,
         signUpWithEmail,
-        signInWithEmail,
+        signIn,
         signOut,
         verifyCode,
         getSession,

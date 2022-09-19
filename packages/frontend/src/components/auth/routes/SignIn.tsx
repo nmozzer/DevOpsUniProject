@@ -1,13 +1,13 @@
 import { Button, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../cognito/context';
 import { useValidatePassword, useValidateUsername } from '../../../cognito/validationHooks';
 import AuthComponent from '../AuthComponent';
 
-export const SignIn = () => {
+const SignIn = () => {
     const { username, setUsername, usernameIsValid } = useValidateUsername('');
     const { password, setPassword, passwordIsValid } = useValidatePassword('');
     const [error, setError] = React.useState('');
@@ -15,17 +15,22 @@ export const SignIn = () => {
     const isValid = !usernameIsValid || username.length === 0 || !passwordIsValid || password.length === 0;
 
     const navigate = useNavigate();
-    const authContext = React.useContext(AuthContext);
+    const authContext = useContext(AuthContext);
 
     const signInOnClick = async () => {
         try {
-            await authContext.signInWithEmail(username, password);
+            await authContext.signIn(username, password);
             navigate('/ideas');
         } catch (err: any) {
+            console.log('here');
+
             if (err.code === 'UserNotConfirmedException') {
-                navigate('verify');
+                navigate('/verify');
             } else {
+                console.log('here');
+                alert(err.message);
                 setError(err.message);
+                navigate('/signIn');
             }
         }
     };
@@ -36,12 +41,12 @@ export const SignIn = () => {
 
     return (
         <div className="flex justify-center items-center h-screen flex-col">
-            <Paper className="w-full p-20">
+            <Paper className="w-8/12 p-20 m-10">
                 <Box m={2}>
                     <Typography variant="h3">Sign In</Typography>
                 </Box>
                 {/* Username */}
-                <Box className="w-9/12" m={1}>
+                <Box className="w-11/12" m={1}>
                     <AuthComponent
                         validLabel={'Username'}
                         invalidLabel={'Invalid Username'}
@@ -50,7 +55,7 @@ export const SignIn = () => {
                     />
                 </Box>
                 {/* Password */}
-                <Box className="w-9/12" m={1}>
+                <Box className="w-11/12" m={1}>
                     <AuthComponent
                         validLabel={'Password'}
                         invalidLabel={'Invalid Password'}
@@ -72,24 +77,28 @@ export const SignIn = () => {
                 </Box>
 
                 {/* Buttons */}
-                <Box mt={2}>
-                    <Box m={1}>
-                        <Button color="secondary" variant="contained" onClick={() => navigate(-1)}>
-                            Cancel
-                        </Button>
+                <div className="flex justify-start items-center">
+                    <Box mt={2} className="flex">
+                        <Box m={1}>
+                            <Button color="secondary" variant="contained" onClick={() => navigate(-1)}>
+                                Cancel
+                            </Button>
+                        </Box>
+                        <Box m={1}>
+                            <Button disabled={isValid} color="primary" variant="contained" onClick={signInOnClick}>
+                                Sign In
+                            </Button>
+                        </Box>
                     </Box>
-                    <Box m={1}>
-                        <Button disabled={isValid} color="primary" variant="contained" onClick={signInOnClick}>
-                            Sign In
-                        </Button>
+                    <Box mt={2}>
+                        <Box onClick={() => navigate('/signup')}>
+                            <Typography variant="body1">Register a new account</Typography>
+                        </Box>
                     </Box>
-                </Box>
-                <Box mt={2}>
-                    <Box onClick={() => navigate('/signup')}>
-                        <Typography variant="body1">Register a new account</Typography>
-                    </Box>
-                </Box>
+                </div>
             </Paper>
         </div>
     );
 };
+
+export default SignIn;
