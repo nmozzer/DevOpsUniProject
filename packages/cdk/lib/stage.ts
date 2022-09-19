@@ -14,7 +14,7 @@ export class PipelineStage extends Stage {
     constructor(scope: Construct, id: string, props: CustomStageProps) {
         super(scope, id, props);
 
-        const { stage, hostedZoneName, domainName } = props;
+        const { stage, hostedZoneName, domainName, hostedZoneId } = props;
 
         const { userPool, userPoolClient } = new AuthStack(this, `${stage}DevOpsAuthStack`, { stage });
         const backend = new BackendStack(this, `${stage}DevOpsBackend`, {
@@ -27,6 +27,8 @@ export class PipelineStage extends Stage {
         const uiStack = new UIStack(this, `${stage}DevOpsUIStack`, {
             domainName,
             hostedZoneName,
+            stage,
+            hostedZoneId,
         });
     }
 }

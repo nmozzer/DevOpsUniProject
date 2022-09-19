@@ -10,33 +10,38 @@ import { Construct } from 'constructs';
 interface UIStackProps extends cdk.StackProps {
     domainName: string;
     hostedZoneName: string;
+    hostedZoneId: string;
+    stage: string;
 }
 
 export class UIStack extends cdk.Stack {
     private domainName: string;
     private hostedZoneName: string;
+    private hostedZoneId: string;
 
     constructor(scope: Construct, id: string, props: UIStackProps) {
         super(scope, id, props);
+        const { domainName, hostedZoneName, hostedZoneId, stage } = props;
 
-        this.domainName = props.domainName;
-        this.hostedZoneName = props.hostedZoneName;
+        this.domainName = domainName;
+        this.hostedZoneName = hostedZoneName;
 
-        const assetsBucket = new s3.Bucket(this, 'AssetBucket', {
+        const assetsBucket = new s3.Bucket(this, `${stage}AssetBucket`, {
             bucketName: this.domainName,
             removalPolicy: cdk.RemovalPolicy.DESTROY,
         });
 
-        const hostedZone = route53.HostedZone.fromLookup(this, 'HostedZone', {
-            domainName: this.hostedZoneName,
+        const hostedZone = route53.HostedZone.fromHostedZoneAttributes(this, `${stage}HostedZone`, {
+            hostedZoneId,
+            zoneName: hostedZoneName,
         });
 
-        const domainCertificate = new acm.DnsValidatedCertificate(this, 'Certificate', {
+        const domainCertificate = new acm.DnsValidatedCertificate(this, `${stage}Certificate`, {
             domainName: this.domainName,
             hostedZone,
         });
 
-        const cloudFrontIdentity = new cloudfront.OriginAccessIdentity(this, 'Identity');
+        const cloudFrontIdentity = new cloudfront.OriginAccessIdentity(this, `${stage}Identity`);
         assetsBucket.grantRead(cloudFrontIdentity);
 
         const s3OriginConfig: cloudfront.SourceConfiguration = {
@@ -64,7 +69,7 @@ export class UIStack extends cdk.Stack {
             ],
         };
 
-        const cloudFrontDistribution = new cloudfront.CloudFrontWebDistribution(this, 'Distribution', {
+        const cloudFrontDistribution = new cloudfront.CloudFrontWebDistribution(this, `${stage}Distribution`, {
             viewerCertificate: cloudfront.ViewerCertificate.fromAcmCertificate(domainCertificate, {
                 aliases: [hostedZone.zoneName],
                 securityPolicy: cloudfront.SecurityPolicyProtocol.TLS_V1_2_2021,
@@ -72,13 +77,13 @@ export class UIStack extends cdk.Stack {
             originConfigs: [s3OriginConfig, apiOriginConfig],
         });
 
-        new route53.ARecord(this, 'DomainToDistributionRecord', {
+        new route53.ARecord(this, `${stage}DomainToDistributionRecord`, {
             recordName: this.domainName,
             target: route53.RecordTarget.fromAlias(new route53Targets.CloudFrontTarget(cloudFrontDistribution)),
             zone: hostedZone,
         });
 
-        new s3Deployment.BucketDeployment(this, 'DeployAssetBucket', {
+        new s3Deployment.BucketDeployment(this, `${stage}DeployAssetBucket`, {
             destinationBucket: assetsBucket,
             sources: [s3Deployment.Source.asset('../frontend/public')],
             distribution: cloudFrontDistribution,
