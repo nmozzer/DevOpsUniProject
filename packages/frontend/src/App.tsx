@@ -10,6 +10,7 @@ import AuthProvider from './cognito/context';
 import Verify from './components/auth/routes/Verify';
 import Resend from './components/auth/routes/Resend';
 import ForgotPassword from './components/auth/routes/ForgotPassword';
+import AuthRoutes from './components/auth/routes/AuthRoutes';
 
 function App() {
     return (
@@ -41,10 +42,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<LandingPage />} />
                         <Route path="/ideas" element={<MainPage />} />
-                        <Route path="/signIn" element={<SignIn />} />
-                        <Route path="/verify" element={<Verify />} />
-                        <Route path="/resendCode" element={<Resend />} />
-                        <Route path="/forgotPassword" element={<ForgotPassword />} />
+                        <AuthRoutes />
                     </Routes>
                 </Router>
             </AuthProvider>
