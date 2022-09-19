@@ -7,6 +7,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import MainPage from './components/MainPage';
 import SignIn from './components/auth/routes/SignIn';
 import AuthProvider from './cognito/context';
+import Verify from './components/auth/routes/Verify';
 
 function App() {
     return (
@@ -39,6 +40,7 @@ function App() {
                         <Route path="/" element={<LandingPage />} />
                         <Route path="/ideas" element={<MainPage />} />
                         <Route path="/signIn" element={<SignIn />} />
+                        <Route path="/verify" element={<Verify />} />
                     </Routes>
                 </Router>
             </AuthProvider>
