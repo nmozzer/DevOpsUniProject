@@ -39,7 +39,7 @@ export class PipelineStack extends cdk.Stack {
                 stage: stage,
                 hostedZoneId: hostedZoneId,
                 hostedZoneName: hostedZoneName,
-                domainName: `${stage}.dev-ops-assignment.${hostedZoneName}`,
+                domainName: `${stage.toLocaleLowerCase()}.dev-ops-assignment.${hostedZoneName}`,
             }),
         );
         pipelineStage.addPre(
