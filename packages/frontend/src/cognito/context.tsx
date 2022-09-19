@@ -156,9 +156,9 @@ const AuthProvider = ({ children }: AuthProps) => {
         }
     };
 
-    const changePassword = async (oldPassword: string, newPassword: string) => {
+    const changePassword = async (oldPassword: string, newPassword: string, passwordChallenge?: boolean) => {
         try {
-            await cognito.changePassword(oldPassword, newPassword);
+            await cognito.changePassword(oldPassword, newPassword, passwordChallenge);
         } catch (error) {
             throw error;
         }

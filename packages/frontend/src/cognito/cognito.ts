@@ -14,6 +14,8 @@ export interface SignUpProps {
     password: string;
 }
 
+export const PASSWORD_CHALLENGE = 'PASSWORD_CHALLENGE';
+
 const userPool: CognitoUserPool = new CognitoUserPool(COGNITO_CONFIG);
 
 export const getCurrentUser = (): CognitoUser | null => {
@@ -77,6 +79,9 @@ export const signIn = async (username: string, password: string): Promise<any> =
             },
             onFailure: (error: Error) => {
                 reject(error);
+            },
+            newPasswordRequired: (result: any) => {
+                resolve(result);
             },
         });
     }).catch((error) => {
@@ -163,7 +168,7 @@ export const sendCode = async (username: string) => {
     }).catch((error) => {
         throw error;
     });
-};;
+};
 
 export const forgotPassword = async (username: string, code: string, password: string): Promise<any> => {
     return new Promise((resolve, reject) => {
@@ -187,12 +192,26 @@ export const forgotPassword = async (username: string, code: string, password: s
     });
 };
 
-export const changePassword = async (newPassword: string, oldPassword: string) => {
+export const changePassword = async (newPassword: string, oldPassword: string, passwordChallenge?: boolean) => {
     return new Promise((resolve, reject) => {
         const user = getCurrentUser();
+        const attrs = getAttributes();
 
         if (!user) {
             throw new Error('No current user');
+        }
+
+        if (passwordChallenge) {
+            user.completeNewPasswordChallenge(newPassword, attrs, {
+                onSuccess: (data: any) => {
+                    console.log('Password updated successfully');
+                    resolve(data);
+                },
+                onFailure: (error: Error) => {
+                    reject(error);
+                },
+            });
+            return;
         }
 
         user.changePassword(oldPassword, newPassword, (error?: Error, result?: 'SUCCESS') => {

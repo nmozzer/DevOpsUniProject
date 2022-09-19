@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { PASSWORD_CHALLENGE } from '../../../cognito/cognito';
 import { AuthContext } from '../../../cognito/context';
 import { useValidatePassword, useValidateUsername } from '../../../cognito/validationHooks';
 import AuthComponent from '../AuthComponent';
@@ -19,7 +20,7 @@ const SignIn = () => {
 
     const signInOnClick = async () => {
         try {
-            await authContext.signIn(username, password);
+            const result = await authContext.signIn(username, password);
             navigate('/ideas');
         } catch (err: any) {
             console.log('here');
