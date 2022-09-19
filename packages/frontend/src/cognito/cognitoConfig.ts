@@ -1,6 +1,6 @@
 import { ICognitoUserPoolData } from 'amazon-cognito-identity-js';
 
 export const COGNITO_CONFIG: ICognitoUserPoolData = {
-    UserPoolId: 'eu-west-1_ImJJaS573',
-    ClientId: '5t1vm3urdjbk9dvutd2l221741',
+    UserPoolId: 'eu-west-1_65GwMLsQR',
+    ClientId: '1m0nraabmf3r6l1lb8k8f2ok83',
 };
