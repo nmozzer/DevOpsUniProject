@@ -71,7 +71,7 @@ export class UIStack extends cdk.Stack {
 
         const cloudFrontDistribution = new cloudfront.CloudFrontWebDistribution(this, `${stage}Distribution`, {
             viewerCertificate: cloudfront.ViewerCertificate.fromAcmCertificate(domainCertificate, {
-                aliases: [hostedZone.zoneName],
+                aliases: [domainName],
                 securityPolicy: cloudfront.SecurityPolicyProtocol.TLS_V1_2_2021,
             }),
             originConfigs: [s3OriginConfig, apiOriginConfig],
