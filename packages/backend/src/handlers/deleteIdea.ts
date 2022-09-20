@@ -1,3 +1,4 @@
+import { returnEmptyResponse, returnOriginalItemResponse } from './../util/apiResponses';
 import { ExecuteStatementCommand, ExecuteStatementCommandInput } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb';
 
@@ -10,7 +11,12 @@ export const deleteIdea = async (dbClient: DynamoDBDocumentClient, tableName: st
     try {
         const response = await dbClient.send(new ExecuteStatementCommand(query));
         console.log('Deleted Item Successfully');
-        return response;
+
+        if (!response?.Items) {
+            return returnEmptyResponse();
+        }
+
+        return returnOriginalItemResponse(response.Items);
     } catch (error) {
         throw new Error(error);
     }
