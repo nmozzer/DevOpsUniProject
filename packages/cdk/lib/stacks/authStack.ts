@@ -38,7 +38,12 @@ export class AuthStack extends cdk.Stack {
             },
         });
 
-        this.userPoolClient = this.userPool.addClient(`${stage}UserPoolWebClient`);
+        this.userPoolClient = this.userPool.addClient(`${stage}UserPoolWebClient`, {
+            authFlows: {
+                userSrp: true,
+                userPassword: true,
+            },
+        });
 
         this.createUserPoolGroup('Admin', stage);
         this.createUserPoolGroup('User', stage);

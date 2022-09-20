@@ -17,18 +17,18 @@ export class PipelineStage extends Stage {
         const { stage, hostedZoneName, domainName, hostedZoneId } = props;
 
         const { userPool, userPoolClient } = new AuthStack(this, `${stage}DevOpsAuthStack`, { stage });
-        // const backend = new BackendStack(this, `${stage}DevOpsBackend`, {
-        //     userPool,
-        //     assetRoute: '../backend',
-        //     userPoolClient,
-        //     stage,
-        // });
+        const backend = new BackendStack(this, `${stage}DevOpsBackend`, {
+            userPool,
+            assetRoute: '../backend',
+            userPoolClient,
+            stage,
+        });
 
-        // const uiStack = new UIStack(this, `${stage}DevOpsUIStack`, {
-        //     domainName,
-        //     hostedZoneName,
-        //     stage,
-        //     hostedZoneId,
-        // });
+        const uiStack = new UIStack(this, `${stage}DevOpsUIStack`, {
+            domainName,
+            hostedZoneName,
+            stage,
+            hostedZoneId,
+        });
     }
 }

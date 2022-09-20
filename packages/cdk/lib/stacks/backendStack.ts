@@ -40,8 +40,8 @@ export class BackendStack extends Stack {
 
         const corsPreflight: apig.CorsPreflightOptions = {
             allowHeaders: ['*'],
-            allowMethods: [apig.CorsHttpMethod.POST, apig.CorsHttpMethod.GET],
-            allowOrigins: ['http://localhost:8080'],
+            allowMethods: [apig.CorsHttpMethod.POST, apig.CorsHttpMethod.GET, apig.CorsHttpMethod.OPTIONS],
+            allowOrigins: ['*'],
         };
 
         const authorizer = new apiGatewayAuthorizers.HttpUserPoolAuthorizer(`${stage}user-pool-authorizer`, userPool, {
