@@ -6,6 +6,8 @@ import * as apig from '@aws-cdk/aws-apigatewayv2-alpha';
 import * as apiGatewayAuthorizers from '@aws-cdk/aws-apigatewayv2-authorizers-alpha';
 import { HttpLambdaIntegration } from '@aws-cdk/aws-apigatewayv2-integrations-alpha';
 import { IUserPool, IUserPoolClient } from 'aws-cdk-lib/aws-cognito';
+import { CfnRoute } from 'aws-cdk-lib/aws-apigatewayv2';
+import { AuthorizationType } from 'aws-cdk-lib/aws-apigateway';
 
 interface Props extends StackProps {
     userPool: IUserPool;
@@ -41,8 +43,7 @@ export class BackendStack extends Stack {
         const corsPreflight: apig.CorsPreflightOptions = {
             allowHeaders: ['*'],
             allowMethods: [apig.CorsHttpMethod.POST, apig.CorsHttpMethod.GET, apig.CorsHttpMethod.OPTIONS],
-            allowOrigins: ['http://localhost:8080'],
-            allowCredentials: true,
+            allowOrigins: ['*'],
         };
 
         const authorizer = new apiGatewayAuthorizers.HttpUserPoolAuthorizer(`${stage}user-pool-authorizer`, userPool, {
@@ -57,6 +58,12 @@ export class BackendStack extends Stack {
 
         const api = new apig.HttpApi(this, `${stage}API`, { corsPreflight });
         api.addRoutes(apiRoutes);
+
+        new CfnRoute(this, `${stage}OptionsRoute`, {
+            apiId: api.httpApiId,
+            routeKey: 'OPTIONS /api/{proxy+}',
+            authorizationType: AuthorizationType.NONE,
+        });
 
         this.domainName = `${api.httpApiId}.execute-api.${this.region}.amazonaws.com`;
     }
