@@ -29,6 +29,7 @@ export class PipelineStage extends Stage {
             hostedZoneName,
             stage,
             hostedZoneId,
+            frontEndAssetRoute: '../frontend/build',
         });
     }
 }

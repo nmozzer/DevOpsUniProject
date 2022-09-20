@@ -13,12 +13,13 @@ interface UIStackProps extends cdk.StackProps {
     hostedZoneName: string;
     hostedZoneId: string;
     stage: string;
+    frontEndAssetRoute: string;
 }
 
 export class UIStack extends cdk.Stack {
     constructor(scope: Construct, id: string, props: UIStackProps) {
         super(scope, id, props);
-        const { domainName, hostedZoneName, hostedZoneId, stage } = props;
+        const { domainName, hostedZoneName, hostedZoneId, stage, frontEndAssetRoute } = props;
 
         const cloudFrontIdentity = new cloudfront.OriginAccessIdentity(this, `${stage}Identity`);
 
@@ -59,7 +60,7 @@ export class UIStack extends cdk.Stack {
 
         new s3Deployment.BucketDeployment(this, `${stage}DeployAssetBucket`, {
             destinationBucket: assetsBucket,
-            sources: [s3Deployment.Source.asset('../frontend/build')],
+            sources: [s3Deployment.Source.asset(frontEndAssetRoute)],
             distribution: cloudFrontDistribution,
             distributionPaths: ['/*'],
             memoryLimit: 512,
