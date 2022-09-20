@@ -42,7 +42,7 @@ export class BackendStack extends Stack {
 
         const corsPreflight: apig.CorsPreflightOptions = {
             allowHeaders: ['*'],
-            allowMethods: [apig.CorsHttpMethod.POST, apig.CorsHttpMethod.GET, apig.CorsHttpMethod.OPTIONS],
+            allowMethods: [apig.CorsHttpMethod.ANY],
             allowOrigins: ['*'],
         };
 
