@@ -33,7 +33,7 @@ const unWrappedHandler = async (
 
     return {
         statusCode: 200,
-        body: 'HelloWorld',
+        body: 'Hello World',
         headers: {
             'Content-Type': 'application/json',
         },
