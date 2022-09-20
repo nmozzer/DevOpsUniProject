@@ -19,25 +19,25 @@ const unWrappedHandler = async (
     isAdmin: boolean,
     rawPath: string,
 ) => {
-    if (rawPath === '/deleteIdea' && isAdmin) {
-        return await deleteIdea(client, tableName, idea);
-    }
+    // if (rawPath === '/deleteIdea' && isAdmin) {
+    //     return await deleteIdea(client, tableName, idea);
+    // }
 
-    if (rawPath === '/updateIdea' && isAdmin) {
-        return await updateIdea(client, tableName, idea);
-    }
+    // if (rawPath === '/updateIdea' && isAdmin) {
+    //     return await updateIdea(client, tableName, idea);
+    // }
 
-    if (rawPath === '/getAllIdeas') {
-        return await getAllIdeas(client, tableName);
-    }
+    // if (rawPath === '/getAllIdeas') {
+    //     return await getAllIdeas(client, tableName);
+    // }
 
-    if (rawPath === '/putIdea') {
-        return await putIdea(client, tableName, idea);
-    }
+    // if (rawPath === '/putIdea') {
+    //     return await putIdea(client, tableName, idea);
+    // }
 
     return {
-        statusCode: 404,
-        body: 'Error, unknown path or unauthorised request:' + rawPath,
+        statusCode: 200,
+        body: 'HelloWorld',
         headers: {
             'Content-Type': 'application/json',
         },
