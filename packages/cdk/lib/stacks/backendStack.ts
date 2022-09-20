@@ -51,19 +51,21 @@ export class BackendStack extends Stack {
         });
 
         const apiRoutes: apig.AddRoutesOptions = {
-            path: '/api/{proxy+}',
+            path: '/{proxy+}',
             integration: new HttpLambdaIntegration(`${stage}APIIntegration`, routingLambda, {}),
             authorizer,
         };
 
         const api = new apig.HttpApi(this, `${stage}API`, { corsPreflight });
-        api.addRoutes(apiRoutes);
-
         new CfnRoute(this, `${stage}OptionsRoute`, {
             apiId: api.httpApiId,
-            routeKey: 'OPTIONS /api/{proxy+}',
+            routeKey: 'OPTIONS /{proxy+}',
             authorizationType: AuthorizationType.NONE,
         });
+
+        api.addRoutes(apiRoutes);
+
+        
 
         this.domainName = `${api.httpApiId}.execute-api.${this.region}.amazonaws.com`;
     }

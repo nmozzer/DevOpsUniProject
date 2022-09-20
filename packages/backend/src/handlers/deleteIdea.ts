@@ -1,11 +1,14 @@
+import { FFIdea } from './../types';
 import { returnEmptyResponse, returnOriginalItemResponse } from './../util/apiResponses';
 import { ExecuteStatementCommand, ExecuteStatementCommandInput } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb';
 
-export const deleteIdea = async (dbClient: DynamoDBDocumentClient, tableName: string, uid: string) => {
+export const deleteIdea = async (dbClient: DynamoDBDocumentClient, tableName: string, ffIdea: FFIdea) => {
+    const { uid } = ffIdea;
+
     const query: ExecuteStatementCommandInput = {
         Statement: `DELETE * FROM ${tableName} where uid=?`,
-        Parameters: [{ S: uid }],
+        Parameters: [{ S: uid! }],
     };
 
     try {

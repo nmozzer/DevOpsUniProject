@@ -3,6 +3,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Link, useNavigate } from 'react-router-dom';
 import React from 'react';
 import { AuthContext } from '../cognito/context';
+import { apiCall } from '../api/client';
 
 const Header = () => {
     const navigate = useNavigate();
@@ -16,6 +17,11 @@ const Header = () => {
             alert('Failed to signOut try again');
             navigate('/');
         }
+    };
+
+    const getResult = async () => {
+        const token = window.localStorage.getItem('idToken');
+        const result = await apiCall('/', token!);
     };
 
     return (
@@ -37,6 +43,7 @@ const Header = () => {
                         <Typography variant="h6" color="inherit" component="div">
                             <Link to="/signIn">SignIn | </Link>
                             <Button onClick={signOutOnClick}>SignOut</Button>
+                            <Button onClick={getResult}>CallApi</Button>
                         </Typography>
                     </div>
                 </Toolbar>
