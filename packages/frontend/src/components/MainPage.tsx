@@ -6,14 +6,10 @@ import IdeaTable from './IdeaTable';
 export const MainPage = () => {
     const authContext = useContext(AuthContext);
     const navigate = useNavigate();
-    console.log(authContext);
-
-    console.log(authContext.authState);
 
     const signedIn = authContext.authState === AuthState.SignedIn ? true : false;
     useEffect(() => {
         if (!signedIn) {
-            console.log(authContext.authState);
             navigate('/signIn');
         }
     });
