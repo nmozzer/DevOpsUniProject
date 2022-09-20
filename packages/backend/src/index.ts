@@ -19,19 +19,19 @@ const unWrappedHandler = async (
     isAdmin: boolean,
     rawPath: string,
 ) => {
-    if (rawPath === 'deleteIdea' && isAdmin) {
+    if (rawPath === '/deleteIdea' && isAdmin) {
         return await deleteIdea(client, tableName, idea);
     }
 
-    if (rawPath === 'updateIdea' && isAdmin) {
+    if (rawPath === '/updateIdea' && isAdmin) {
         return await updateIdea(client, tableName, idea);
     }
 
-    if (rawPath === 'getAllIdeas') {
+    if (rawPath === '/getAllIdeas') {
         return await getAllIdeas(client, tableName);
     }
 
-    if (rawPath === 'putIdea') {
+    if (rawPath === '/putIdea') {
         return await putIdea(client, tableName, idea);
     }
 
