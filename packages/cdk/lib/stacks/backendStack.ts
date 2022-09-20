@@ -9,6 +9,7 @@ import { IUserPool, IUserPoolClient } from 'aws-cdk-lib/aws-cognito';
 
 interface Props extends StackProps {
     userPool: IUserPool;
+    userPoolClient: IUserPoolClient;
     assetRoute: string;
     stage: string;
 }
@@ -19,7 +20,7 @@ export class BackendStack extends Stack {
     constructor(scope: Construct, id: string, props: Props) {
         super(scope, id, props);
 
-        const { userPool, assetRoute, stage } = props;
+        const { userPool, assetRoute, userPoolClient, stage } = props;
 
         const ffTable = new dynamodb.Table(this, `${stage}FFTable`, {
             partitionKey: { name: 'PK', type: dynamodb.AttributeType.STRING },
@@ -43,7 +44,9 @@ export class BackendStack extends Stack {
             allowOrigins: ['http://localhost:8080'],
         };
 
-        const authorizer = new apiGatewayAuthorizers.HttpUserPoolAuthorizer(`${stage}user-pool-authorizer`, userPool);
+        const authorizer = new apiGatewayAuthorizers.HttpUserPoolAuthorizer(`${stage}user-pool-authorizer`, userPool, {
+            userPoolClients: [userPoolClient],
+        });
 
         const apiRoutes: apig.AddRoutesOptions = {
             path: '/api/{proxy+}',
