@@ -57,7 +57,6 @@ export class BackendStack extends Stack {
 
         const api = new apig.HttpApi(this, `${stage}API`, { corsPreflight });
         api.addRoutes(apiRoutes);
-        api.addPropertOverride('Auth.AddDefaultAuthorizerToCorsPreflight', false);
 
         this.domainName = `${api.httpApiId}.execute-api.${this.region}.amazonaws.com`;
     }
