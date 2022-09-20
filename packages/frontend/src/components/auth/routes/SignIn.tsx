@@ -19,7 +19,7 @@ const SignIn = () => {
 
     const signInOnClick = async () => {
         try {
-            const result = await authContext.signIn(username, password);
+            await authContext.signIn(username, password);
             navigate('/ideas');
         } catch (err: any) {
             if (err.code === 'UserNotConfirmedException') {
@@ -27,7 +27,6 @@ const SignIn = () => {
             } else {
                 alert(err.message);
                 setError(err.message);
-                navigate('/signIn');
             }
         }
     };
@@ -85,11 +84,6 @@ const SignIn = () => {
                             <Button disabled={isValid} color="primary" variant="contained" onClick={signInOnClick}>
                                 Sign In
                             </Button>
-                        </Box>
-                    </Box>
-                    <Box mt={2}>
-                        <Box onClick={() => navigate('/signup')}>
-                            <Typography variant="body1">Register a new account</Typography>
                         </Box>
                     </Box>
                 </div>

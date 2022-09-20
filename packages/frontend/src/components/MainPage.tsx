@@ -8,6 +8,7 @@ export const MainPage = () => {
     const navigate = useNavigate();
 
     const signedIn = authContext.authState === AuthState.SignedIn ? true : false;
+
     useEffect(() => {
         if (!signedIn) {
             navigate('/signIn');
