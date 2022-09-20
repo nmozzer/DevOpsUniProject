@@ -57,7 +57,7 @@ export class PipelineStack extends cdk.Stack {
         if (stage !== 'Test') {
             pipelineStage.addPost(
                 new ShellStep('HealthCheck', {
-                    commands: ['node bin/checks.ts'],
+                    commands: [`curl -Ssf ${stage.toLocaleLowerCase()}.dev-ops-assignment.${hostedZoneName}`],
                 }),
             );
         }
