@@ -39,5 +39,11 @@
         "preset": "ts-jest",
         "verbose": true,
         "testEnvironment": "node"
+    },
+    "dependencies": {
+        "@aws-sdk/client-dynamodb": "^3.172.0",
+        "@aws-sdk/lib-dynamodb": "^3.172.0",
+        "aws-lambda": "^1.0.7",
+        "uuid": "^9.0.0"
     }
 }
