@@ -42,6 +42,7 @@ export class BackendStack extends Stack {
             allowHeaders: ['*'],
             allowMethods: [apig.CorsHttpMethod.POST, apig.CorsHttpMethod.GET, apig.CorsHttpMethod.OPTIONS],
             allowOrigins: ['*'],
+            allowCredentials: true,
         };
 
         const authorizer = new apiGatewayAuthorizers.HttpUserPoolAuthorizer(`${stage}user-pool-authorizer`, userPool, {
@@ -56,6 +57,7 @@ export class BackendStack extends Stack {
 
         const api = new apig.HttpApi(this, `${stage}API`, { corsPreflight });
         api.addRoutes(apiRoutes);
+        api.addPropertOverride('Auth.AddDefaultAuthorizerToCorsPreflight', false);
 
         this.domainName = `${api.httpApiId}.execute-api.${this.region}.amazonaws.com`;
     }
