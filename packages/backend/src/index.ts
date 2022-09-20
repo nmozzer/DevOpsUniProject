@@ -1,23 +1,19 @@
-import { putIdea } from './handlers/putIdea';
-import { getAllIdeas } from './handlers/getAllIdeas';
-import { updateIdea } from './handlers/updateIdea';
 import { DDB_CLIENT } from './ddbClient';
 import { APIGatewayProxyResultV2 } from 'aws-lambda';
-import { RawRequest, FFIdea } from './types';
+import { RawRequest } from './types';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
-import { deleteIdea } from './handlers/deleteIdea';
 
-interface APIRequest {
-    idea: FFIdea;
-    isAdmin: boolean;
-}
+// interface APIRequest {
+//     idea: FFIdea;
+//     isAdmin: boolean;
+// }
 
 const unWrappedHandler = async (
     client: DynamoDBClient,
     tableName: string,
-    idea: FFIdea,
-    isAdmin: boolean,
-    rawPath: string,
+    // idea: FFIdea,
+    // isAdmin: boolean,
+    // rawPath: string,
 ) => {
     // if (rawPath === '/deleteIdea' && isAdmin) {
     //     return await deleteIdea(client, tableName, idea);
@@ -51,11 +47,11 @@ if (!TABLE_NAME) {
 }
 
 export const handler = async (rawRequest: RawRequest): Promise<APIGatewayProxyResultV2> => {
-    const { body, rawPath } = rawRequest;
+    // const { body, rawPath } = rawRequest;
 
-    const { isAdmin, idea } = JSON.parse(body) as APIRequest;
+    // const { isAdmin, idea } = JSON.parse(body) as APIRequest;
 
-    return await unWrappedHandler(DDB_CLIENT, TABLE_NAME, idea, isAdmin, rawPath);
+    return await unWrappedHandler(DDB_CLIENT, TABLE_NAME);
 };
 
 export default handler;
