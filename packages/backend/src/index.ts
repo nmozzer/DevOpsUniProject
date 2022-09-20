@@ -10,7 +10,7 @@ import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 
 const unWrappedHandler = async (
     client: DynamoDBClient,
-    tableName: string,
+    tableName?: string,
     // idea: FFIdea,
     // isAdmin: boolean,
     // rawPath: string,
