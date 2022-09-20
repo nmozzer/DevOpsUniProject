@@ -19,6 +19,7 @@ export interface AuthInfo {
     attrInfo?: any;
     authState: AuthState;
     signIn?: any;
+    signUpWithEmail?: any;
     signOut?: any;
     verifyCode?: any;
     getSession?: any;
@@ -71,7 +72,6 @@ const AuthProvider = ({ children }: AuthProps) => {
                 setAttrInfo(attr);
                 setAuthState(AuthState.SignedIn);
             } catch (error) {
-                console.log(error);
                 setAuthState(AuthState.SignedOut);
             }
         };
@@ -85,10 +85,17 @@ const AuthProvider = ({ children }: AuthProps) => {
     const signIn = async (username: string, password: string) => {
         try {
             await cognito.signIn(username, password);
-            console.log('count');
             setAuthState(AuthState.SignedIn);
         } catch (error) {
             setAuthState(AuthState.SignedOut);
+            throw error;
+        }
+    };
+
+    const signUpWithEmail = async (username: string, email: string, password: string) => {
+        try {
+            await cognito.signUpWithEmail({ username, email, password });
+        } catch (error) {
             throw error;
         }
     };
@@ -161,6 +168,7 @@ const AuthProvider = ({ children }: AuthProps) => {
         authState,
         sessionInfo,
         attrInfo,
+        signUpWithEmail,
         signIn,
         signOut,
         verifyCode,

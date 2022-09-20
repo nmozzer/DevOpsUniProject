@@ -11,16 +11,17 @@ import SignIn from './components/auth/routes/SignIn';
 import Verify from './components/auth/routes/Verify';
 import { apiCall } from './api/client';
 import Header from './components/Header';
+import SignUp from './components/auth/routes/SignUp';
 
 function App() {
-    // useEffect(() => {
-    //     const getResult = async () => {
-    //         const result = await apiCall('/api');
-    //         console.log(result);
-    //     };
+    useEffect(() => {
+        const getResult = async () => {
+            const result = await apiCall('/api');
+            console.log(result);
+        };
 
-    //     getResult();
-    // }, []);
+        getResult();
+    }, []);
 
     return (
         <React.Fragment>
@@ -35,6 +36,7 @@ function App() {
                         <Route path="/resendCode" element={<Resend />} />
                         <Route path="/forgotPassword" element={<ForgotPassword />} />
                         <Route path="/changePassword" element={<ChangePassword />} />
+                        <Route path="/signUp" element={<SignUp />} />
                     </Routes>
                 </Router>
             </AuthProvider>

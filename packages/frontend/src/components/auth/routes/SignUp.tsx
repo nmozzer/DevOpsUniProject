@@ -4,43 +4,49 @@ import Paper from '@mui/material/Paper';
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../cognito/context';
-import { useValidatePassword, useValidateUsername } from '../../../cognito/validationHooks';
+import { useValidateEmail, useValidatePassword, useValidateUsername } from '../../../cognito/validationHooks';
 import AuthComponent from '../AuthComponent';
 
-const SignIn = () => {
+const SignUp = () => {
     const { username, setUsername, usernameIsValid } = useValidateUsername('');
     const { password, setPassword, passwordIsValid } = useValidatePassword('');
+    const {
+        password: passwordConfirm,
+        setPassword: setPasswordConfirm,
+        passwordIsValid: passwordConfirmIsValid,
+    } = useValidatePassword('');
+    const { email, setEmail, emailIsValid } = useValidateEmail('');
     const [error, setError] = React.useState('');
 
-    const isValid = !usernameIsValid || username.length === 0 || !passwordIsValid || password.length === 0;
+    const isValid =
+        !emailIsValid ||
+        email.length === 0 ||
+        !usernameIsValid ||
+        username.length === 0 ||
+        !passwordIsValid ||
+        password.length === 0 ||
+        !passwordConfirmIsValid ||
+        passwordConfirm.length === 0;
 
     const navigate = useNavigate();
     const authContext = useContext(AuthContext);
 
-    const signInOnClick = async () => {
+    const signUpOnClick = async () => {
         try {
-            const result = await authContext.signIn(username, password);
+            const result = await authContext.signUpWithEmail(username, email, password);
+            alert('Sign up successful');
             navigate('/ideas');
         } catch (err: any) {
-            if (err.code === 'UserNotConfirmedException') {
-                navigate('/verify');
-            } else {
-                alert(err.message);
-                setError(err.message);
-                navigate('/signIn');
-            }
+            alert(err.message);
+            setError(err.message);
         }
-    };
-
-    const resetPasswordOnClick = async () => {
-        navigate('/resendCode');
     };
 
     return (
         <div className="flex justify-center items-center h-screen flex-col">
             <Paper className="w-8/12 p-20 m-10">
                 <Box m={2}>
-                    <Typography variant="h3">Sign In</Typography>
+                    <Typography variant="h3">Sign Up</Typography>
                 </Box>
                 {/* Username */}
                 <Box className="w-11/12" m={1}>
@@ -49,6 +55,15 @@ const SignIn = () => {
                         invalidLabel={'Invalid Username'}
                         isValid={usernameIsValid}
                         setProp={setUsername}
+                    />
+                </Box>
+                {/* Email */}
+                <Box className="w-11/12" m={1}>
+                    <AuthComponent
+                        validLabel={'Email'}
+                        invalidLabel={'Invalid Email'}
+                        isValid={emailIsValid}
+                        setProp={setEmail}
                     />
                 </Box>
                 {/* Password */}
@@ -61,9 +76,14 @@ const SignIn = () => {
                         passwordType="password"
                     />
                 </Box>
-                {/* Forgot Password */}
-                <Box onClick={resetPasswordOnClick} mt={2}>
-                    <Typography variant="body2">Forgot Password?</Typography>
+                <Box className="w-11/12" m={1}>
+                    <AuthComponent
+                        validLabel={'Confirm Password'}
+                        invalidLabel={'Invalid Password'}
+                        isValid={passwordConfirmIsValid}
+                        setProp={setPasswordConfirm}
+                        passwordType="password"
+                    />
                 </Box>
 
                 {/* Error */}
@@ -82,14 +102,9 @@ const SignIn = () => {
                             </Button>
                         </Box>
                         <Box m={1}>
-                            <Button disabled={isValid} color="primary" variant="contained" onClick={signInOnClick}>
-                                Sign In
+                            <Button disabled={isValid} color="primary" variant="contained" onClick={signUpOnClick}>
+                                Sign Up
                             </Button>
-                        </Box>
-                    </Box>
-                    <Box mt={2}>
-                        <Box onClick={() => navigate('/signup')}>
-                            <Typography variant="body1">Register a new account</Typography>
                         </Box>
                     </Box>
                 </div>
@@ -98,4 +113,4 @@ const SignIn = () => {
     );
 };
 
-export default SignIn;
+export default SignUp;

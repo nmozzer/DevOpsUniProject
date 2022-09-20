@@ -4,15 +4,21 @@ import {
     CognitoUserAttribute,
     CognitoUserPool,
     CognitoUserSession,
+    ISignUpResult,
 } from 'amazon-cognito-identity-js';
 import { COGNITO_CONFIG } from './cognitoConfig';
+
+export interface SignUpProps {
+    username: string;
+    email: string;
+    password: string;
+}
 
 export const PASSWORD_CHALLENGE = 'PASSWORD_CHALLENGE';
 
 const userPool: CognitoUserPool = new CognitoUserPool(COGNITO_CONFIG);
 
 export const getCurrentUser = (): CognitoUser | null => {
-    console.log(userPool.getCurrentUser());
     return userPool.getCurrentUser();
 };
 
@@ -32,6 +38,26 @@ export const getSession = async (): Promise<any> => {
                 reject(error);
             }
             resolve(session);
+        });
+    }).catch((error) => {
+        throw error;
+    });
+};
+
+export const signUpWithEmail = async ({ username, password, email }: SignUpProps): Promise<any> => {
+    return new Promise((resolve, reject) => {
+        const attributes = [
+            new CognitoUserAttribute({
+                Name: 'email',
+                Value: email,
+            }),
+        ];
+
+        userPool.signUp(username, password, attributes, [], (error: any, result?: ISignUpResult) => {
+            if (error) {
+                reject(error);
+            }
+            resolve(result);
         });
     }).catch((error) => {
         throw error;
