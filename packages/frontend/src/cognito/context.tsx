@@ -62,12 +62,16 @@ const AuthProvider = ({ children }: AuthProps) => {
         const getSessionInfo = async () => {
             try {
                 const session: any = await getSession();
+                console.log(session);
                 setSessionInfo({
                     accessToken: session.accessToken.jwtToken,
                     refreshToken: session.refreshToken.token,
+                    idToken: session.idToken.jwtToken,
                 });
                 window.localStorage.setItem('accessToken', `${session.accessToken.jwtToken}`);
                 window.localStorage.setItem('refreshToken', `${session.refreshToken.token}`);
+                window.localStorage.setItem('idToken', `${session.idToken.jwtToken}`);
+
                 const attr: any = await getAttributes();
                 setAttrInfo(attr);
                 setAuthState(AuthState.SignedIn);

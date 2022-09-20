@@ -3,7 +3,7 @@ import './css/App.css';
 import LandingPage from './components/LandingPage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import MainPage from './components/MainPage';
-import AuthProvider from './cognito/context';
+import AuthProvider, { AuthContext } from './cognito/context';
 import ChangePassword from './components/auth/routes/ChangePassword';
 import ForgotPassword from './components/auth/routes/ForgotPassword';
 import Resend from './components/auth/routes/Resend';
@@ -14,10 +14,12 @@ import Header from './components/Header';
 import SignUp from './components/auth/routes/SignUp';
 
 function App() {
+    const authContext = React.useContext(AuthContext);
+
     useEffect(() => {
         const getResult = async () => {
-            const result = await apiCall('/api/');
-            console.log(result);
+            const token = window.localStorage.getItem('idToken');
+            const result = await apiCall('/api/', token!);
         };
 
         getResult();

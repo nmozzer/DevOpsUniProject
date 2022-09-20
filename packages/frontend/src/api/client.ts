@@ -1,18 +1,16 @@
 import { getSession } from './../cognito/cognito';
 import { FFIdea } from './../../../backend/src/types';
-import { CognitoUserSession } from 'amazon-cognito-identity-js';
 
-export const apiCall = async (route: string, body?: FFIdea): Promise<FFIdea> => {
+export const apiCall = async (route: string, token: string, body?: FFIdea): Promise<FFIdea> => {
     const apigPrefix = 'https://eqj4eftqec.execute-api.us-east-1.amazonaws.com';
 
-    const session = (await getSession()) as CognitoUserSession;
-    const jwtToken = session.getIdToken().getJwtToken();
+    console.log(token);
 
     const response = await fetch(`${apigPrefix}${route}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            Authorization: jwtToken,
+            Authorization: token,
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
         },
