@@ -62,7 +62,6 @@ const AuthProvider = ({ children }: AuthProps) => {
         const getSessionInfo = async () => {
             try {
                 const session: any = await getSession();
-                console.log(session);
                 setSessionInfo({
                     accessToken: session.accessToken.jwtToken,
                     refreshToken: session.refreshToken.token,

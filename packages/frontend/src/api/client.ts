@@ -21,6 +21,6 @@ export const apiCall = async (route: string, token: string, body?: FFIdea): Prom
         throw new Error('Problem calling ' + route);
     }
 
-    console.log(response.json());
+    console.log(response.json(), 'RESPONSE');
     return response.json();
 };
