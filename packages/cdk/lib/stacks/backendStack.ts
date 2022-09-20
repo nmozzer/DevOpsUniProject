@@ -46,7 +46,6 @@ export class BackendStack extends Stack {
 
         const authorizer = new apiGatewayAuthorizers.HttpUserPoolAuthorizer(`${stage}user-pool-authorizer`, userPool, {
             userPoolClients: [userPoolClient],
-            identitySource: ['$request.header.Authorization'],
         });
 
         const apiRoutes: apig.AddRoutesOptions = {
