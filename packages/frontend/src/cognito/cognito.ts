@@ -198,7 +198,8 @@ export const changePassword = async (newPassword: string, oldPassword: string, p
         const attrs = getAttributes();
 
         if (!user) {
-            throw new Error('No current user');
+            reject('No Current User');
+            return;
         }
 
         if (passwordChallenge) {

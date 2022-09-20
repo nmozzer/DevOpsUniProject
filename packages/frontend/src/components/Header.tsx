@@ -1,8 +1,22 @@
 import { AppBar, Toolbar, IconButton, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { AuthContext } from '../cognito/context';
 
 const Header = () => {
+    const navigate = useNavigate();
+    const auth = React.useContext(AuthContext);
+
+    const signOutOnClick = async () => {
+        try {
+            await auth.signOut();
+        } catch (error) {
+            alert('Failed to signOut try again');
+            navigate('/');
+        }
+    };
+
     return (
         <div className="flex flex-col bg-pink-500">
             <AppBar position="sticky">
