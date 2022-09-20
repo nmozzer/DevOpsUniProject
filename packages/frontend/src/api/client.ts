@@ -2,7 +2,7 @@ import { getSession } from './../cognito/cognito';
 import { FFIdea } from './../../../backend/src/types';
 
 export const apiCall = async (route: string, token: string, body?: FFIdea): Promise<FFIdea> => {
-    const apigPrefix = 'https://eqj4eftqec.execute-api.us-east-1.amazonaws.com';
+    const apigPrefix = 'https://4jk16o282g.execute-api.us-east-1.amazonaws.com';
 
     console.log(token);
 
