@@ -17,9 +17,10 @@ export interface SignUpProps {
 export const PASSWORD_CHALLENGE = 'PASSWORD_CHALLENGE';
 
 const userPool: CognitoUserPool = new CognitoUserPool(COGNITO_CONFIG);
+const currentUser: CognitoUser | null = userPool.getCurrentUser();
 
 export const getCurrentUser = (): CognitoUser | null => {
-    return userPool.getCurrentUser();
+    return currentUser;
 };
 
 export const getUserByUsername = (username: string): CognitoUser => {

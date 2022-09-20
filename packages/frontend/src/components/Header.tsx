@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, IconButton, Typography } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Typography, Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link, useNavigate } from 'react-router-dom';
 import React from 'react';
@@ -11,6 +11,7 @@ const Header = () => {
     const signOutOnClick = async () => {
         try {
             await auth.signOut();
+            navigate('/');
         } catch (error) {
             alert('Failed to signOut try again');
             navigate('/');
@@ -34,7 +35,8 @@ const Header = () => {
                     </div>
                     <div>
                         <Typography variant="h6" color="inherit" component="div">
-                            <Link to="/signout">Signout</Link>
+                            <Link to="/signIn">SignIn | </Link>
+                            <Button onClick={signOutOnClick}>SignOut</Button>
                         </Typography>
                     </div>
                 </Toolbar>
