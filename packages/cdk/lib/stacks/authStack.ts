@@ -31,10 +31,10 @@ export class AuthStack extends cdk.Stack {
                 requireUppercase: false,
             },
             userVerification: {
-                emailSubject: 'DevOpsAssignment: Your verification code is',
-                emailBody: `Your verification code is`,
+                emailSubject: 'DevOpsAssignment: Your verification code is {####}',
+                emailBody: `Your verification code is {####}`,
                 emailStyle: cognito.VerificationEmailStyle.CODE,
-                smsMessage: 'DevOpsAssignment: Your verification code is',
+                smsMessage: 'DevOpsAssignment: Your verification code is {####}',
             },
         });
 
