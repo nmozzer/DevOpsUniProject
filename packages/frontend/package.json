@@ -17,6 +17,8 @@
         "@types/react-dom": "^18.0.6",
         "amazon-cognito-identity-js": "^5.2.10",
         "axios": "^0.27.2",
+        "playwright": "^1.26.0",
+        "puppeteer": "^18.0.3",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-router-dom": "^6.4.0",
@@ -29,7 +31,9 @@
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "ci": "npm ci"
+        "ci": "npm ci",
+        "pretest": "tsc --incremental -p tests/tsconfig.json",
+        "test-integration": "playwright test -c src/__tests__/integration"
     },
     "eslintConfig": {
         "extends": [
@@ -50,6 +54,7 @@
         ]
     },
     "devDependencies": {
+        "@playwright/test": "^1.26.0",
         "@types/prettier": "^2.7.0",
         "autoprefixer": "^10.4.11",
         "postcss": "^8.4.16",
