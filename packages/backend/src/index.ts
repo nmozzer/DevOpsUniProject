@@ -42,10 +42,6 @@ const unWrappedHandler = async (
 
 const TABLE_NAME = process.env.FF_TABLE;
 
-if (!TABLE_NAME) {
-    throw new Error('NO TABLENAME PRESENT');
-}
-
 export const handler = async (rawRequest: RawRequest): Promise<APIGatewayProxyResultV2> => {
     // const { body, rawPath } = rawRequest;
 
