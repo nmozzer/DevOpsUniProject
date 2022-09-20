@@ -13,6 +13,8 @@ export const apiCall = async (route: string, body?: FFIdea): Promise<FFIdea> => 
         headers: {
             'Content-Type': 'application/json',
             Authorization: jwtToken,
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
         },
         body: JSON.stringify(body || ''),
     });

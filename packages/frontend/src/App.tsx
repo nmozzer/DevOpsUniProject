@@ -16,7 +16,7 @@ import SignUp from './components/auth/routes/SignUp';
 function App() {
     useEffect(() => {
         const getResult = async () => {
-            const result = await apiCall('/api');
+            const result = await apiCall('/api/');
             console.log(result);
         };
 
