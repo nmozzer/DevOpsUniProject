@@ -1,8 +1,10 @@
+import { RawRequest } from './../src/types';
 import { handler } from '../src';
 
 describe('index.ts', () => {
     it('returns Hello World', async () => {
-        const result = await handler();
+        const req = {} as RawRequest;
+        const result = await handler(req);
 
         expect(result.body).toEqual('Hello World');
     });
