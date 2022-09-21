@@ -6,8 +6,6 @@ import * as apig from '@aws-cdk/aws-apigatewayv2-alpha';
 import * as apiGatewayAuthorizers from '@aws-cdk/aws-apigatewayv2-authorizers-alpha';
 import { HttpLambdaIntegration } from '@aws-cdk/aws-apigatewayv2-integrations-alpha';
 import { IUserPool, IUserPoolClient } from 'aws-cdk-lib/aws-cognito';
-import { CfnRoute } from 'aws-cdk-lib/aws-apigatewayv2';
-import { AuthorizationType } from 'aws-cdk-lib/aws-apigateway';
 import { HttpMethod } from '@aws-cdk/aws-apigatewayv2-alpha';
 
 interface Props extends StackProps {
