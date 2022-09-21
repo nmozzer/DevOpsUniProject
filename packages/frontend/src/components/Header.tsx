@@ -21,7 +21,7 @@ const Header = () => {
 
     const getResult = async () => {
         const token = window.localStorage.getItem('idToken');
-        const result = await apiCall('/', token!);
+        const result = await apiCall('/test', token!);
     };
 
     return (
