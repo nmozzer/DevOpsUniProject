@@ -1,6 +1,5 @@
 import { App } from 'aws-cdk-lib';
 import { Template } from 'aws-cdk-lib/assertions';
-import * as path from 'path';
 import { PipelineStack } from '../lib/pipeline';
 
 describe('Pipeline', () => {
