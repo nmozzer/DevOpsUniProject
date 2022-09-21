@@ -1,2 +1,2 @@
-export const STAGES = ['Test', 'Beta', 'Prod'] as const;
-export type Stage = typeof STAGES[number];
+export const STAGES = ['Beta', 'Prod'] as const;
+export type CustomStage = typeof STAGES[number];

@@ -2,10 +2,15 @@ import { Construct } from 'constructs';
 import * as cdk from 'aws-cdk-lib';
 import * as cognito from 'aws-cdk-lib/aws-cognito';
 import { StackProps } from 'aws-cdk-lib';
+import { CustomStage } from '../types';
 
 interface AuthStackProps extends StackProps {
-    stage: string;
+    stage: CustomStage;
 }
+
+const EMAIL_SUBJECT = 'DevOpsAssignment: Your verification code is {####}';
+const EMAIL_BODY = 'Your verification code is {####}';
+const SMS_MESSAGE = 'DevOpsAssignment: Your verification code is {####}';
 
 export class AuthStack extends cdk.Stack {
     readonly userPool: cognito.IUserPool;
@@ -16,8 +21,8 @@ export class AuthStack extends cdk.Stack {
 
         const { stage } = props;
 
-        this.userPool = new cognito.UserPool(this, `${stage}FFUserPool`, {
-            userPoolName: `${stage}FFUserPool`,
+        this.userPool = new cognito.UserPool(this, `${stage}DevOpsUserPool`, {
+            userPoolName: `${stage}DevOpsUserPool`,
             selfSignUpEnabled: true,
             signInAliases: {
                 email: true,
@@ -31,10 +36,10 @@ export class AuthStack extends cdk.Stack {
                 requireUppercase: false,
             },
             userVerification: {
-                emailSubject: 'DevOpsAssignment: Your verification code is {####}',
-                emailBody: `Your verification code is {####}`,
+                emailSubject: EMAIL_SUBJECT,
+                emailBody: EMAIL_BODY,
                 emailStyle: cognito.VerificationEmailStyle.CODE,
-                smsMessage: 'DevOpsAssignment: Your verification code is {####}',
+                smsMessage: SMS_MESSAGE,
             },
         });
 
