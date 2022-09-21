@@ -8,6 +8,7 @@ import { HttpLambdaIntegration } from '@aws-cdk/aws-apigatewayv2-integrations-al
 import { IUserPool, IUserPoolClient } from 'aws-cdk-lib/aws-cognito';
 import { CfnRoute } from 'aws-cdk-lib/aws-apigatewayv2';
 import { AuthorizationType } from 'aws-cdk-lib/aws-apigateway';
+import { HttpMethod } from '@aws-cdk/aws-apigatewayv2-alpha';
 
 interface Props extends StackProps {
     userPool: IUserPool;
@@ -43,29 +44,23 @@ export class BackendStack extends Stack {
         const corsPreflight: apig.CorsPreflightOptions = {
             allowHeaders: ['*'],
             allowMethods: [apig.CorsHttpMethod.ANY],
-            allowOrigins: ['*'],
+            allowOrigins: ['http://*', 'https://*'],
+            allowCredentials: true,
         };
 
         const authorizer = new apiGatewayAuthorizers.HttpUserPoolAuthorizer(`${stage}user-pool-authorizer`, userPool, {
             userPoolClients: [userPoolClient],
         });
-
-        const apiRoutes: apig.AddRoutesOptions = {
-            path: '/{proxy+}',
-            integration: new HttpLambdaIntegration(`${stage}APIIntegration`, routingLambda, {}),
-            authorizer,
-        };
+        const integration = new HttpLambdaIntegration(`${stage}APIIntegration`, routingLambda, {});
 
         const api = new apig.HttpApi(this, `${stage}API`, { corsPreflight });
-        new CfnRoute(this, `${stage}OptionsRoute`, {
-            apiId: api.httpApiId,
-            routeKey: 'OPTIONS /{proxy+}',
-            authorizationType: AuthorizationType.NONE,
+        api.addRoutes({
+            path: '/{proxy}+',
+            methods: [HttpMethod.OPTIONS],
+            integration,
         });
 
-        api.addRoutes(apiRoutes);
-
-        
+        api.addRoutes({ path: '/{proxy+}', integration, authorizer });
 
         this.domainName = `${api.httpApiId}.execute-api.${this.region}.amazonaws.com`;
     }
