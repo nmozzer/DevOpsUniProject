@@ -9,7 +9,7 @@ export const updateIdea = async (request: AddOrUpdateRequest, dbClient: DynamoDB
     const assignedAsNum: string = assigned ? '1' : '0';
 
     const query: ExecuteStatementCommandInput = {
-        Statement: `UPDATE ${tableName} SET {'PK':?, 'system':?, 'beans':?, 'difficulty':?, 'creator':?, 'assigned':?} where name=?`,
+        Statement: `UPDATE ${tableName} SET {'PK':?, 'system':?, 'beans':?, 'difficulty':?, 'creator':?, 'assigned':?} where PK=?`,
         Parameters: [
             { S: name },
             { S: system },

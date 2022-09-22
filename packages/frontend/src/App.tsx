@@ -9,7 +9,6 @@ import ForgotPassword from './components/auth/routes/ForgotPassword';
 import Resend from './components/auth/routes/Resend';
 import SignIn from './components/auth/routes/SignIn';
 import Verify from './components/auth/routes/Verify';
-import { apiCall } from './api/client';
 import Header from './components/Header';
 import SignUp from './components/auth/routes/SignUp';
 
