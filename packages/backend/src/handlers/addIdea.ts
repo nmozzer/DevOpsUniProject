@@ -5,6 +5,8 @@ import { successResponse } from '../util/apiResponses';
 
 export const addIdea = async (request: AddOrUpdateRequest, dbClient: DynamoDBDocumentClient, tableName: string) => {
     const { name, system, beans, difficulty, creator, assigned } = request;
+    console.log('after request destructure');
+
 
     const assignedAsNum: string = assigned ? '1' : '0';
 

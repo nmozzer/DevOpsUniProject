@@ -33,6 +33,8 @@ export const unWrappedHandler = async (
     if (rawPath === '/addIdea') {
         try {
             const request = parseSchema(addOrUpdateSchema, event.body) as {} as AddOrUpdateRequest;
+            console.log('after zod');
+
             return await addIdea(request, client, tableName);
         } catch (error) {
             return errorResponse(error);
