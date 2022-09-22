@@ -57,10 +57,8 @@ const Verify = () => {
                     />
                 </Box>
 
-                {/* Resend Button */}
 
                 {/* Buttons */}
-
                 <Box className="flex justify-start items-center" mt={2}>
                     <Box m={1}>
                         <Button color="secondary" variant="contained" onClick={() => navigate(-1)}>

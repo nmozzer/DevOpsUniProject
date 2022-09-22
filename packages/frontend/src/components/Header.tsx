@@ -19,11 +19,6 @@ const Header = () => {
         }
     };
 
-    const getResult = async () => {
-        const token = window.localStorage.getItem('idToken');
-        await apiCall('/test', token!);
-    };
-
     return (
         <div className="flex flex-col bg-pink-500">
             <AppBar position="sticky">
@@ -41,9 +36,8 @@ const Header = () => {
                     </div>
                     <div>
                         <Typography variant="h6" color="inherit" component="div">
-                            <Link to="/signIn">SignIn | </Link>
-                            <Button onClick={signOutOnClick}>SignOut</Button>
-                            <Button onClick={getResult}>CallApi</Button>
+                            <Link to="/signIn">Sign In | </Link>
+                            <Button onClick={signOutOnClick}>Sign Out</Button>
                         </Typography>
                     </div>
                 </Toolbar>

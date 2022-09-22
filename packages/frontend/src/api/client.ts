@@ -1,7 +1,16 @@
 import axios from 'axios';
 
-export const apiCall = async (route: string, token: string, body?: any): Promise<any> => {
-    const apigPrefix = 'https://4jk16o282g.execute-api.us-east-1.amazonaws.com';
+interface FFIdea {
+    name: string;
+    system: string;
+    beans: string;
+    difficulty: string;
+    creator: string;
+    assigned: boolean;
+}
+export const apiCall = async (route: string, body?: FFIdea): Promise<any> => {
+    const apigPrefix = 'https://a18w1fqq8k.execute-api.us-east-1.amazonaws.com';
+    const token = window.localStorage.getItem('idToken');
 
     console.log(token);
     try {
@@ -9,7 +18,7 @@ export const apiCall = async (route: string, token: string, body?: any): Promise
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: token,
+                Authorization: token!,
                 'Access-Control-Allow-Origin': '*',
             },
             data: JSON.stringify(body || ''),
