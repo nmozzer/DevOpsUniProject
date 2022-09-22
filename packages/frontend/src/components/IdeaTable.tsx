@@ -7,18 +7,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { apiCall } from '../api/client';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import AddOrUpdateModal, { AddOrUpdate } from './AddOrUpdateModal';
-
-interface FFIdea {
-    PK: string;
-    system: string;
-    beans: string;
-    difficulty: string;
-    creator: string;
-    assigned: boolean;
-}
+import { FFIdea } from './form/ideaValidationHooks';
 
 export const IdeaTable = () => {
     const [ideas, setIdeas] = React.useState<FFIdea[]>([]);
