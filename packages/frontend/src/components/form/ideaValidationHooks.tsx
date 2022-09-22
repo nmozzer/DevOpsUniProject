@@ -1,16 +1,7 @@
 import React from 'react';
 
 const DIFFICULTIES = ['Hard', 'Medium', 'Easy'] as const;
-type Difficulty = typeof DIFFICULTIES[number];
-
-export interface FFIdea {
-    PK: string;
-    system: string;
-    beans: number;
-    difficulty: Difficulty;
-    creator: string;
-    assigned: boolean;
-}
+export type Difficulty = typeof DIFFICULTIES[number];
 
 export const useValidateName = (initialValue: string) => {
     const [name, setName] = React.useState(initialValue);
@@ -48,8 +39,8 @@ export const useValidateSystem = (initialValue: string) => {
     return { system, setSystem, systemIsValid };
 };
 
-export const useValidateBeans = (initialValue: string) => {
-    const [beans, setBeans] = React.useState<number>(Number(initialValue));
+export const useValidateBeans = (initialValue: number) => {
+    const [beans, setBeans] = React.useState<number>(initialValue);
     const [beansIsValid, setBeansIsValid] = React.useState(true);
 
     React.useEffect(() => {
@@ -61,7 +52,7 @@ export const useValidateBeans = (initialValue: string) => {
     return { beans, setBeans, beansIsValid };
 };
 
-export const useValidateDifficulty = (initialValue: string) => {
+export const useValidateDifficulty = (initialValue: Difficulty) => {
     const [difficulty, setDifficulty] = React.useState(initialValue);
     const [difficultyIsValid, setDifficultyIsValid] = React.useState<boolean>(true);
 
@@ -78,21 +69,21 @@ export const useValidateDifficulty = (initialValue: string) => {
 };
 
 export const useValidateCreator = (initialValue: string) => {
-    const [difficulty, setCreator] = React.useState(initialValue);
-    const [difficultyIsValid, setCreatorIsValid] = React.useState<boolean>(true);
+    const [creator, setCreator] = React.useState(initialValue);
+    const [creatorIsValid, setCreatorIsValid] = React.useState<boolean>(true);
 
     React.useEffect(() => {
-        if (difficulty.length === 0) {
+        if (creator.length === 0) {
             setCreatorIsValid(true);
             return;
         }
 
-        const isValid = difficulty.length >= 4 ? true : false;
+        const isValid = creator.length >= 4 ? true : false;
 
         setCreatorIsValid(isValid);
-    }, [difficulty]);
+    }, [creator]);
 
-    return { difficulty, setCreator, difficultyIsValid };
+    return { creator, setCreator, creatorIsValid };
 };
 
 export const useValidateAssigned = (initialValue: boolean) => {

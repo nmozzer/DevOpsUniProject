@@ -6,10 +6,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { apiCall } from '../api/client';
+import { apiCall, FFIdea } from '../api/client';
 import Typography from '@mui/material/Typography';
-import AddOrUpdateModal, { AddOrUpdate } from './AddOrUpdateModal';
-import { FFIdea } from './form/ideaValidationHooks';
+import AddOrUpdateModal, { AddOrUpdate } from './modal/AddOrUpdateModal';
 
 export const IdeaTable = () => {
     const [ideas, setIdeas] = React.useState<FFIdea[]>([]);
@@ -24,12 +23,6 @@ export const IdeaTable = () => {
         getIdeas();
     }, []);
     const rows = ideas;
-
-    const addIdeaOnClick = async () => {
-        try {
-            // await apiCall('/addIdea', {});
-        } catch (error) {}
-    };
 
     const DisplayRows = () => {
         if (ideas.length === 0) {
@@ -64,7 +57,7 @@ export const IdeaTable = () => {
                     <DisplayRows />
                 </TableHead>
                 <TableBody>
-                    {rows.map((row: any) => (
+                    {rows.map((row) => (
                         <TableRow key={row.PK} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                             <TableCell component="th" scope="row">
                                 {row.PK}

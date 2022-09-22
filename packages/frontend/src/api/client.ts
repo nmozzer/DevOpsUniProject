@@ -1,13 +1,16 @@
 import axios from 'axios';
+import { Difficulty } from '../components/form/ideaValidationHooks';
 
-interface FFIdea {
-    name: string;
+export interface FFIdea {
+    PK?: string;
+    name?: string;
     system: string;
-    beans: string;
-    difficulty: string;
+    beans: number;
+    difficulty: Difficulty;
     creator: string;
     assigned: boolean;
 }
+
 export const apiCall = async (route: string, body?: FFIdea): Promise<any> => {
     const apigPrefix = 'https://a18w1fqq8k.execute-api.us-east-1.amazonaws.com';
     const token = window.localStorage.getItem('idToken');
