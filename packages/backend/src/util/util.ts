@@ -1,9 +1,8 @@
-import { HttpMethod } from '@aws-cdk/aws-apigatewayv2-alpha';
 import { APIGatewayProxyEventV2WithJWTAuthorizer } from 'aws-lambda';
 import { z } from 'zod';
 
 export const isOptionsRequest = (event: APIGatewayProxyEventV2WithJWTAuthorizer): boolean => {
-    return event.requestContext.http.method === HttpMethod.OPTIONS ? true : false;
+    return event.requestContext.http.method === 'OPTIONS' ? true : false;
 };
 
 export const isAdmin = (event: APIGatewayProxyEventV2WithJWTAuthorizer): boolean => {

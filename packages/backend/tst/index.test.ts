@@ -1,4 +1,3 @@
-import { HttpMethod } from '@aws-cdk/aws-apigatewayv2-alpha';
 import { APIGatewayProxyEventV2WithJWTAuthorizer } from 'aws-lambda';
 import { unWrappedHandler } from '../src';
 import { DDB_CLIENT } from '../src/ddbClient';
@@ -26,7 +25,7 @@ describe('index.ts', () => {
                     },
                 },
                 http: {
-                    method: HttpMethod.POST,
+                    method: 'POST',
                 },
             },
         } as {} as APIGatewayProxyEventV2WithJWTAuthorizer;
@@ -49,7 +48,7 @@ describe('index.ts', () => {
                     },
                 },
                 http: {
-                    method: HttpMethod.OPTIONS,
+                    method: 'OPTIONS',
                 },
             },
         } as {} as APIGatewayProxyEventV2WithJWTAuthorizer;
@@ -71,7 +70,7 @@ describe('index.ts', () => {
                     },
                 },
                 http: {
-                    method: HttpMethod.POST,
+                    method: 'POST',
                 },
             },
         } as {} as APIGatewayProxyEventV2WithJWTAuthorizer;
@@ -94,7 +93,7 @@ describe('index.ts', () => {
                     },
                 },
                 http: {
-                    method: HttpMethod.POST,
+                    method: 'POST',
                 },
             },
         } as {} as APIGatewayProxyEventV2WithJWTAuthorizer;
