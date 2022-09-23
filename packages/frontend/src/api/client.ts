@@ -15,7 +15,6 @@ export const apiCall = async (route: string, body?: FFIdea): Promise<any> => {
     const apigPrefix = 'https://a18w1fqq8k.execute-api.us-east-1.amazonaws.com';
     const token = window.localStorage.getItem('idToken');
 
-    console.log(token);
     try {
         const response = await axios(`${apigPrefix}${route}`, {
             method: 'POST',
@@ -26,7 +25,7 @@ export const apiCall = async (route: string, body?: FFIdea): Promise<any> => {
             },
             data: JSON.stringify(body || ''),
         });
-        console.log(response.data, 'RESPONSE');
+        console.log(response?.data, 'RESPONSE');
 
         return response.data;
     } catch (error) {

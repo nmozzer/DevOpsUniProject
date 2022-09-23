@@ -19,11 +19,7 @@ export const parseSchema = (schema: z.Schema, body?: string) => {
     if (!body) {
         throw new Error('Expected request to have a body');
     }
-    console.log('before parse');
-
     const parsedBody = JSON.parse(body);
-    console.log('after parse');
-    console.log(parsedBody);
 
     return schema.safeParse(parsedBody);
 };

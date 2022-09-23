@@ -2,7 +2,7 @@ import { AttributeValue } from '@aws-sdk/client-dynamodb';
 import { APIGatewayProxyStructuredResultV2 } from 'aws-lambda';
 
 export const successResponse = (
-    ideaList?: Record<string, AttributeValue>[] | '',
+    ideaList?: Record<string, AttributeValue>[] | {}[],
 ): APIGatewayProxyStructuredResultV2 => {
     return {
         statusCode: 200,
