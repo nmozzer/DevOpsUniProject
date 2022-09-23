@@ -44,7 +44,6 @@ const ModalForm = ({ type, ffIdea, setOpen }: ModalFormProps) => {
 
     const [error, setError] = React.useState('');
 
-
     const isValid =
         !nameIsValid ||
         name.length === 0 ||
@@ -68,7 +67,9 @@ const ModalForm = ({ type, ffIdea, setOpen }: ModalFormProps) => {
         try {
             type === AddOrUpdate.ADD ? await apiCall('/addIdea', ffIdea) : await apiCall('/updateIdea', ffIdea);
             alert('Action Successful');
+            const response = await apiCall('/getAllIdeas');
             setOpen(false);
+            window.location.reload();
         } catch (err: any) {
             alert(err.message);
             setError(err.message);

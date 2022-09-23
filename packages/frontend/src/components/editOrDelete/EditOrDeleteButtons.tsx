@@ -49,6 +49,8 @@ const EditOrDeleteButtons: React.FC<ModalProps> = ({ type, ffIdea }: ModalProps)
             await apiCall('/deleteIdea', { nameDeletion: name });
             alert('Successfully deleted');
             setOpenDelete(false);
+            const response = await apiCall('/getAllIdeas');
+            window.location.reload();
         } catch (error) {
             alert(error);
             setOpenDelete(false);

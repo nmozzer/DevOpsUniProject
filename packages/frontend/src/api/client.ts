@@ -28,7 +28,7 @@ export const apiCall = async (route: string, body?: FFIdea | DeleteFFIdea): Prom
                 Authorization: token!,
                 'Access-Control-Allow-Origin': '*',
             },
-            data: JSON.stringify(body || ''),
+            data: body || {},
         });
         console.log(response?.data, 'RESPONSE');
 

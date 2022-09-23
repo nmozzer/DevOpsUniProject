@@ -10,15 +10,20 @@ import { apiCall, FFIdea } from '../api/client';
 import Typography from '@mui/material/Typography';
 import AddOrUpdateModal, { AddOrUpdate } from './modal/AddOrUpdateModal';
 import EditOrDeleteButtons from './editOrDelete/EditOrDeleteButtons';
+import { useIdeasHook } from './hooks/getIdeasHooks';
 
 export const IdeaTable = () => {
-    const [ideas, setIdeas] = React.useState<FFIdea[]>([]);
+    const { ideas, setIdeas } = useIdeasHook();
     const [error, setError] = React.useState<string>('');
 
     React.useEffect(() => {
         const getIdeas = async () => {
-            const response = await apiCall('/getAllIdeas');
-            setIdeas(response);
+            try {
+                const response = await apiCall('/getAllIdeas');
+                setIdeas(response);
+            } catch (error: any) {
+                setError(error.message);
+            }
         };
 
         getIdeas();
@@ -58,7 +63,7 @@ export const IdeaTable = () => {
                     <DisplayRows />
                 </TableHead>
                 <TableBody>
-                    {rows.map((row) => (
+                    {rows.map((row: FFIdea) => (
                         <TableRow key={row.PK} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                             <TableCell component="th" scope="row">
                                 {row.PK}
