@@ -9,6 +9,7 @@ import Paper from '@mui/material/Paper';
 import { apiCall, FFIdea } from '../api/client';
 import Typography from '@mui/material/Typography';
 import AddOrUpdateModal, { AddOrUpdate } from './modal/AddOrUpdateModal';
+import EditOrDeleteButtons from './editOrDelete/EditOrDeleteButtons';
 
 export const IdeaTable = () => {
     const [ideas, setIdeas] = React.useState<FFIdea[]>([]);
@@ -67,7 +68,21 @@ export const IdeaTable = () => {
                             <TableCell align="right">{row.difficulty}</TableCell>
                             <TableCell align="right">{row.assigned.toString()}</TableCell>
                             <TableCell align="right">{row.creator}</TableCell>
-                            <TableCell align="right"></TableCell>
+                            <TableCell align="right">
+                                <EditOrDeleteButtons
+                                    {...{
+                                        type: AddOrUpdate.UPDATE,
+                                        ffIdea: {
+                                            name: row.PK,
+                                            system: row.system,
+                                            beans: row.beans,
+                                            difficulty: row.difficulty,
+                                            assigned: row.assigned,
+                                            creator: row.creator,
+                                        },
+                                    }}
+                                />
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
@@ -75,7 +90,5 @@ export const IdeaTable = () => {
         </TableContainer>
     );
 };
-
-const convertResponse = () => {};
 
 export default IdeaTable;

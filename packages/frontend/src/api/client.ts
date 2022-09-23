@@ -11,7 +11,11 @@ export interface FFIdea {
     assigned: boolean;
 }
 
-export const apiCall = async (route: string, body?: FFIdea): Promise<any> => {
+export interface DeleteFFIdea {
+    nameDeletion: string;
+}
+
+export const apiCall = async (route: string, body?: FFIdea | DeleteFFIdea): Promise<any> => {
     const apigPrefix = 'https://a18w1fqq8k.execute-api.us-east-1.amazonaws.com';
     const token = window.localStorage.getItem('idToken');
 
@@ -26,7 +30,6 @@ export const apiCall = async (route: string, body?: FFIdea): Promise<any> => {
             data: JSON.stringify(body || ''),
         });
         console.log(response?.data, 'RESPONSE');
-
 
         return response?.data;
     } catch (error) {

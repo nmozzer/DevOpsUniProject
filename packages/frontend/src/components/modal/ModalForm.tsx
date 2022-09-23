@@ -34,6 +34,8 @@ const ModalForm = ({ type, ffIdea, setOpen }: ModalFormProps) => {
         existingBeans = beans;
     }
 
+    console.log(ffIdea);
+
     const { name, setName, nameIsValid } = useValidateName(existingName || '');
     const { system, setSystem, systemIsValid } = useValidateSystem(existingSystem || '');
     const { beans, setBeans, beansIsValid } = useValidateBeans(existingBeans || 2);
@@ -101,6 +103,7 @@ const ModalForm = ({ type, ffIdea, setOpen }: ModalFormProps) => {
                         invalidLabel={'Invalid Idea Name'}
                         isValid={nameIsValid}
                         setProp={setName}
+                        defaultValue={name}
                     />
                 </Box>
                 {/* System */}
@@ -110,6 +113,7 @@ const ModalForm = ({ type, ffIdea, setOpen }: ModalFormProps) => {
                         invalidLabel={'Invalid System'}
                         isValid={systemIsValid}
                         setProp={setSystem}
+                        defaultValue={system}
                     />
                 </Box>
                 {/* Beans */}
@@ -122,6 +126,7 @@ const ModalForm = ({ type, ffIdea, setOpen }: ModalFormProps) => {
                         onChange={(evt: React.ChangeEvent<HTMLTextAreaElement>) => {
                             setBeans(Number(evt.target.value));
                         }}
+                        defaultValue={beans}
                     />
                 </Box>
                 {/* Difficulty */}

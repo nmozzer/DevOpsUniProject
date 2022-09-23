@@ -7,9 +7,10 @@ interface IdeaFormProps {
     invalidLabel: string;
     isValid: boolean;
     setProp: (_: string) => void;
+    defaultValue?: string;
 }
 
-export const IdeaFormComponent = ({ validLabel, invalidLabel, isValid, setProp }: IdeaFormProps) => {
+export const IdeaFormComponent = ({ validLabel, invalidLabel, isValid, setProp, defaultValue }: IdeaFormProps) => {
     return (
         <TextField
             fullWidth
@@ -19,6 +20,7 @@ export const IdeaFormComponent = ({ validLabel, invalidLabel, isValid, setProp }
             onChange={(evt: React.ChangeEvent<HTMLTextAreaElement>) => {
                 setProp(evt.target.value);
             }}
+            defaultValue={defaultValue}
         />
     );
 };
