@@ -12,15 +12,24 @@ import {
     useValidateDifficulty,
     useValidateAssigned,
 } from '../form/ideaValidationHooks';
-import { AddOrUpdate, ModalType } from './AddOrUpdateModal';
+import { AddOrUpdate, ModalProps } from './AddOrUpdateModal';
 
-const ModalForm = (modalType: ModalType) => {
-    const { name, setName, nameIsValid } = useValidateName('');
-    const { system, setSystem, systemIsValid } = useValidateSystem('');
-    const { beans, setBeans, beansIsValid } = useValidateBeans(2);
-    const { difficulty, setDifficulty } = useValidateDifficulty('Easy');
-    const { creator, setCreator, creatorIsValid } = useValidateCreator('');
-    const { assigned, setAssigned } = useValidateAssigned(false);
+const ModalForm = ({ type, ffIdea }: ModalProps) => {
+    const {
+        name: existingName,
+        system: existingSystem,
+        difficulty: existingDifficulty,
+        creator: existingCreator,
+        assigned: existingAssigned,
+        beans: existingBeans,
+    } = ffIdea!;
+
+    const { name, setName, nameIsValid } = useValidateName(existingName || '');
+    const { system, setSystem, systemIsValid } = useValidateSystem(existingSystem || '');
+    const { beans, setBeans, beansIsValid } = useValidateBeans(existingBeans || 2);
+    const { difficulty, setDifficulty } = useValidateDifficulty(existingDifficulty || 'Easy');
+    const { creator, setCreator, creatorIsValid } = useValidateCreator(existingCreator || '');
+    const { assigned, setAssigned } = useValidateAssigned(existingAssigned || false);
 
     const [error, setError] = React.useState('');
 
@@ -46,25 +55,23 @@ const ModalForm = (modalType: ModalType) => {
             assigned,
         };
         try {
-            modalType.type === AddOrUpdate.ADD
-                ? await apiCall('/addIdea', ffIdea)
-                : await apiCall('/updateIdea', ffIdea);
+            type === AddOrUpdate.ADD ? await apiCall('/addIdea', ffIdea) : await apiCall('/updateIdea', ffIdea);
         } catch (err: any) {
             alert(err.message);
             setError(err.message);
         }
     };
 
-    const AddOrUpdateButton = (type: ModalType) => {
-        return type.type === AddOrUpdate.ADD ? (
+    const AddOrUpdateButton = ({ type }: { type: AddOrUpdate }) => {
+        return type === AddOrUpdate.ADD ? (
             <Button onClick={addOrUpdateClick}>Add Idea</Button>
         ) : (
             <Button onClick={addOrUpdateClick}>Update Idea</Button>
         );
     };
 
-    const AddOrUpdateFormTitle = (type: ModalType) => {
-        return type.type === AddOrUpdate.ADD ? (
+    const AddOrUpdateFormTitle = ({ type }: { type: AddOrUpdate }) => {
+        return type === AddOrUpdate.ADD ? (
             <Typography variant="h4">Add Idea</Typography>
         ) : (
             <Typography variant="h4">Update Idea</Typography>
@@ -75,7 +82,7 @@ const ModalForm = (modalType: ModalType) => {
         <div className="flex justify-center items-center h-11/12 flex-col">
             <Paper className="w-full p-10">
                 <Box m={2}>
-                    <AddOrUpdateFormTitle {...modalType} />
+                    <AddOrUpdateFormTitle {...{ type }} />
                 </Box>
                 {/* Name */}
                 <Box className="w-11/12" m={1}>
@@ -160,7 +167,7 @@ const ModalForm = (modalType: ModalType) => {
                 <div className="flex justify-start items-center">
                     <Box mt={2} className="flex">
                         <Box m={1}>
-                            <AddOrUpdateButton {...modalType} />
+                            <AddOrUpdateButton {...{ type }} />
                         </Box>
                     </Box>
                 </div>

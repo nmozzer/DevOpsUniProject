@@ -4,14 +4,16 @@ import Modal from '@mui/material/Modal';
 import React from 'react';
 import BuildIcon from '@mui/icons-material/Build';
 import ModalForm from './ModalForm';
+import { FFIdea } from '../../api/client';
 
 export enum AddOrUpdate {
     ADD,
     UPDATE,
 }
 
-export interface ModalType {
+export interface ModalProps {
     type: AddOrUpdate;
+    ffIdea?: FFIdea;
 }
 
 const style = {
@@ -25,13 +27,13 @@ const style = {
     p: 4,
 };
 
-const AddOrUpdateModal: React.FC<ModalType> = (type: ModalType) => {
+const AddOrUpdateModal: React.FC<ModalProps> = ({ type, ffIdea }: ModalProps) => {
     const [open, setOpen] = React.useState<boolean>(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const AddOrUpdateButton = (type: ModalType) => {
-        return type.type === AddOrUpdate.ADD ? (
+    const AddOrUpdateButton = ({ type }: { type: AddOrUpdate }) => {
+        return type === AddOrUpdate.ADD ? (
             <Button onClick={handleOpen}>Add Idea</Button>
         ) : (
             <Button onClick={handleOpen}>
@@ -42,7 +44,7 @@ const AddOrUpdateModal: React.FC<ModalType> = (type: ModalType) => {
 
     return (
         <div>
-            <AddOrUpdateButton {...type} />
+            <AddOrUpdateButton {...{ type }} />
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -50,7 +52,7 @@ const AddOrUpdateModal: React.FC<ModalType> = (type: ModalType) => {
                 aria-describedby="Add or Modify the details here to add/change an idea"
             >
                 <Box sx={style} className="w-3/4">
-                    <ModalForm {...type} />
+                    <ModalForm {...{ type, ffIdea }} />
                 </Box>
             </Modal>
         </div>
