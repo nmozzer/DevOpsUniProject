@@ -12,13 +12,13 @@ export const updateIdea = async (request: AddOrUpdateRequest, dbClient: DynamoDB
 
     const query: ExecuteStatementCommandInput = {
         Statement: `UPDATE "${tableName}" 
-        SET 'PK'=? 
-        SET 'system'=? 
-        SET 'beans'=? 
-        SET 'difficulty'=? 
-        SET 'creator'=? 
-        SET 'assigned'=? 
-        where 'PK'=?`,
+        SET PK=? 
+        SET system=? 
+        SET beans=? 
+        SET difficulty=? 
+        SET creator=? 
+        SET assigned=? 
+        where PK=?`,
         Parameters: [
             { S: name },
             { S: system },
