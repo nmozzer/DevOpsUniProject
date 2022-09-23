@@ -13,7 +13,7 @@ export const updateIdea = async (request: AddOrUpdateRequest, dbClient: DynamoDB
         Statements: [
             {
                 Statement: `DELETE FROM "${tableName}" where PK=?`,
-                Parameters: [{ PK: oldName }],
+                Parameters: [{ S: oldName }],
             },
             {
                 Statement: `INSERT INTO "${tableName}" value {'PK':?, 'system':?, 'beans':?, 'difficulty':?, 'creator':?, 'assigned':?}`,
