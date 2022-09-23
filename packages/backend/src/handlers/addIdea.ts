@@ -14,8 +14,11 @@ export const addIdea = async (request: AddOrUpdateRequest, dbClient: DynamoDBDoc
         Parameters: [{ S: name }, { S: system }, { N: beans }, { S: difficulty }, { S: creator }, { S: assignedAsNum }],
     };
 
+    console.log(query, ' after query');
+
     const response = await dbClient.send(new ExecuteStatementCommand(query));
     console.log('Added Item Successfully');
+    console.log(response);
 
     return successResponse(response?.Items);
 };
