@@ -7,11 +7,16 @@ export const addIdea = async (request: AddOrUpdateRequest, dbClient: DynamoDBDoc
     const { name, system, beans, difficulty, creator, assigned } = request;
 
 
-    const assignedAsNum: string = assigned ? '1' : '0';
-
     const query: ExecuteStatementCommandInput = {
         Statement: `INSERT INTO "${tableName}" value {'PK':?, 'system':?, 'beans':?, 'difficulty':?, 'creator':?, 'assigned':?}`,
-        Parameters: [{ S: name }, { S: system }, { N: beans }, { S: difficulty }, { S: creator }, { S: assignedAsNum }],
+        Parameters: [
+            { S: name },
+            { S: system },
+            { N: beans.toString() },
+            { S: difficulty },
+            { S: creator },
+            { S: assigned.toString() },
+        ],
     };
 
     console.log(query, ' after query');

@@ -6,17 +6,15 @@ import { successResponse } from '../util/apiResponses';
 export const updateIdea = async (request: AddOrUpdateRequest, dbClient: DynamoDBDocumentClient, tableName: string) => {
     const { name, system, beans, difficulty, creator, assigned } = request;
 
-    const assignedAsNum: string = assigned ? '1' : '0';
-
     const query: ExecuteStatementCommandInput = {
         Statement: `UPDATE "${tableName}" SET {'PK':?, 'system':?, 'beans':?, 'difficulty':?, 'creator':?, 'assigned':?} where PK=?`,
         Parameters: [
             { S: name },
             { S: system },
-            { N: beans },
+            { N: beans.toString() },
             { S: difficulty },
             { S: creator },
-            { S: assignedAsNum },
+            { S: assigned.toString() },
             { S: name },
         ],
     };

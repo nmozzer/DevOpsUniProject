@@ -15,12 +15,11 @@ export const isAdmin = (event: APIGatewayProxyEventV2WithJWTAuthorizer): boolean
     return groups.includes('Admin');
 };
 
-export const parseSchema = (schema: z.Schema, body?: string) => {
+export const parseSchema = (schema: z.Schema, body?: string): z.infer<typeof schema> => {
     if (!body) {
         throw new Error('Expected request to have a body');
     }
     const parsedBody = JSON.parse(body);
 
-    schema.safeParse(parsedBody);
-    return parsedBody;
+    return schema.safeParse(parsedBody);
 };
