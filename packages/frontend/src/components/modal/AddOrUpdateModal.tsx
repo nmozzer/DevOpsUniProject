@@ -34,7 +34,9 @@ const AddOrUpdateModal: React.FC<ModalProps> = ({ type, ffIdea }: ModalProps) =>
 
     const AddOrUpdateButton = ({ type }: { type: AddOrUpdate }) => {
         return type === AddOrUpdate.ADD ? (
-            <Button onClick={handleOpen}>Add Idea</Button>
+            <Button variant="contained" onClick={handleOpen}>
+                Add Idea
+            </Button>
         ) : (
             <Button onClick={handleOpen}>
                 <BuildIcon />
