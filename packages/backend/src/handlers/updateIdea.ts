@@ -12,7 +12,6 @@ export const updateIdea = async (request: AddOrUpdateRequest, dbClient: DynamoDB
 
     const query: ExecuteStatementCommandInput = {
         Statement: `UPDATE "${tableName}" 
-        SET PK=? 
         SET system=? 
         SET beans=? 
         SET difficulty=? 
@@ -20,7 +19,6 @@ export const updateIdea = async (request: AddOrUpdateRequest, dbClient: DynamoDB
         SET assigned=? 
         where PK=?`,
         Parameters: [
-            { S: name },
             { S: system },
             { S: beans.toString() },
             { S: difficulty },
