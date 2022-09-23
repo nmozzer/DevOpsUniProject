@@ -29,10 +29,10 @@ export const updateIdea = async (request: AddOrUpdateRequest, dbClient: DynamoDB
         ],
     };
 
-    console.log(query);
+    console.log(JSON.stringify(query));
 
-    const response = await dbClient.send(new BatchExecuteStatementCommand(query));
+    await dbClient.send(new BatchExecuteStatementCommand(query));
     console.log('Updated Item Successfully');
 
-    return successResponse(response?.Responses);
+    return successResponse([{}]);
 };
