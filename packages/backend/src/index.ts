@@ -6,7 +6,7 @@ import { Context, APIGatewayProxyEventV2WithJWTAuthorizer, APIGatewayProxyStruct
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { isOptionsRequest, isAdmin, parseSchema } from './util/util';
 import { deleteIdea } from './handlers/deleteIdea';
-import { DeleteRequest, deleteSchema, getSchema, addOrUpdateSchema, AddOrUpdateRequest } from './types';
+import { deleteSchema, getSchema, addOrUpdateSchema } from './types';
 import { getAllIdeas } from './handlers/getAllIdeas';
 
 export const unWrappedHandler = async (
