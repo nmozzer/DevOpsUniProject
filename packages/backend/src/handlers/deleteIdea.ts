@@ -1,6 +1,7 @@
 import { successResponse } from './../util/apiResponses';
 import { DeleteRequest } from './../types';
-import { DynamoDBDocumentClient, ExecuteStatementCommand, ExecuteStatementCommandInput } from '@aws-sdk/lib-dynamodb';
+import { DynamoDBDocumentClient, ExecuteStatementCommand } from '@aws-sdk/lib-dynamodb';
+import { ExecuteStatementCommandInput } from '@aws-sdk/client-dynamodb';
 
 export const deleteIdea = async (request: DeleteRequest, dbClient: DynamoDBDocumentClient, tableName: string) => {
     const { nameDeletion } = request;
@@ -15,7 +16,7 @@ export const deleteIdea = async (request: DeleteRequest, dbClient: DynamoDBDocum
     };
 
     const response = await dbClient.send(new ExecuteStatementCommand(query));
-    console.log('Added Deleted Successfully');
+    console.log('Deleted Successfully');
 
     return successResponse(response?.Items);
 };
