@@ -1,5 +1,5 @@
-import { ExecuteStatementCommandInput } from '@aws-sdk/client-dynamodb';
-import { DynamoDBDocumentClient, ExecuteStatementCommand } from '@aws-sdk/lib-dynamodb';
+import { DynamoDBDocumentClient, ExecuteStatementCommandInput } from '@aws-sdk/lib-dynamodb';
+import { ExecuteStatementCommand } from '@aws-sdk/client-dynamodb';
 import { AddOrUpdateRequest } from '../types';
 import { successResponse } from '../util/apiResponses';
 
