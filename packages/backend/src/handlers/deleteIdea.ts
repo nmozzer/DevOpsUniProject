@@ -5,7 +5,7 @@ import { DynamoDBDocumentClient, ExecuteStatementCommand, ExecuteStatementComman
 export const deleteIdea = async (request: DeleteRequest, dbClient: DynamoDBDocumentClient, tableName: string) => {
     const { nameDeletion } = request;
 
-    if (nameDeletion) {
+    if (!nameDeletion) {
         throw new Error('No name provided for deletion');
     }
 
