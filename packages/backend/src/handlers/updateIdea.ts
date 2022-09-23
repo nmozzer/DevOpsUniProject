@@ -12,7 +12,7 @@ export const updateIdea = async (request: AddOrUpdateRequest, dbClient: DynamoDB
     const query: BatchExecuteStatementCommandInput = {
         Statements: [
             {
-                Statement: `DELETE * FROM "${tableName}" where PK=?`,
+                Statement: `DELETE FROM "${tableName}" where PK=?`,
                 Parameters: [{ PK: oldName }],
             },
             {
