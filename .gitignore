@@ -4,3 +4,5 @@ build
 dist
 node_modules
 lerna-debug.log
+dependency-check-bin
+dependency-check-reports
