@@ -47,6 +47,8 @@ export const unWrappedHandler = async (
 
         try {
             const request = parseSchema(addOrUpdateSchema, event.body);
+            console.log(request);
+
             return await updateIdea(request, client, tableName);
         } catch (error) {
             return errorResponse(error);
@@ -60,6 +62,7 @@ export const unWrappedHandler = async (
 
         try {
             const request = parseSchema(deleteSchema, event.body);
+            console.log(request);
             return await deleteIdea(request, client, tableName);
         } catch (error) {
             return errorResponse(error);
