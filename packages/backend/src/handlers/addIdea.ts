@@ -8,7 +8,7 @@ export const addIdea = async (request: AddOrUpdateRequest, dbClient: DynamoDBDoc
 
     const query: ExecuteStatementCommandInput = {
         Statement: `INSERT INTO "${tableName}" value {'PK':?, 'system':?, 'beans':?, 'difficulty':?, 'creator':?, 'assigned':?}`,
-        Parameters: [{ name, system, beans, difficulty, creator, assigned }],
+        Parameters: [{ PK: name, system, beans, difficulty, creator, assigned }],
     };
 
     console.log(query, ' after query');

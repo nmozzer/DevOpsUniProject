@@ -34,8 +34,6 @@ const ModalForm = ({ type, ffIdea, setOpen }: ModalFormProps) => {
         existingBeans = beans;
     }
 
-    console.log(ffIdea);
-
     const { name, setName, nameIsValid } = useValidateName(existingName || '');
     const { system, setSystem, systemIsValid } = useValidateSystem(existingSystem || '');
     const { beans, setBeans, beansIsValid } = useValidateBeans(existingBeans || 2);
@@ -152,6 +150,7 @@ const ModalForm = ({ type, ffIdea, setOpen }: ModalFormProps) => {
                         invalidLabel={'Invalid Creator'}
                         isValid={creatorIsValid}
                         setProp={setCreator}
+                        defaultValue={creator}
                     />
                 </Box>
                 {/* Assigned */}

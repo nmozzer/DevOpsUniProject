@@ -11,7 +11,7 @@ export const deleteIdea = async (request: DeleteRequest, dbClient: DynamoDBDocum
 
     const query: ExecuteStatementCommandInput = {
         Statement: `DELETE * FROM "${tableName}" where PK=?`,
-        Parameters: [{ nameDeletion }],
+        Parameters: [{ PK: nameDeletion }],
     };
 
     const response = await dbClient.send(new ExecuteStatementCommand(query));
