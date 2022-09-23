@@ -1,6 +1,5 @@
 import { AddOrUpdateRequest } from './../types';
-import { ExecuteStatementCommand, ExecuteStatementCommandInput } from '@aws-sdk/client-dynamodb';
-import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb';
+import { DynamoDBDocumentClient, ExecuteStatementCommand, ExecuteStatementCommandInput } from '@aws-sdk/lib-dynamodb';
 import { successResponse } from '../util/apiResponses';
 
 export const addIdea = async (request: AddOrUpdateRequest, dbClient: DynamoDBDocumentClient, tableName: string) => {
@@ -9,14 +8,7 @@ export const addIdea = async (request: AddOrUpdateRequest, dbClient: DynamoDBDoc
 
     const query: ExecuteStatementCommandInput = {
         Statement: `INSERT INTO "${tableName}" value {'PK':?, 'system':?, 'beans':?, 'difficulty':?, 'creator':?, 'assigned':?}`,
-        Parameters: [
-            { S: name },
-            { S: system },
-            { N: beans.toString() },
-            { S: difficulty },
-            { S: creator },
-            { S: assigned.toString() },
-        ],
+        Parameters: [{ name, system, beans, difficulty, creator, assigned }],
     };
 
     console.log(query, ' after query');
