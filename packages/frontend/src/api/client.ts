@@ -4,6 +4,7 @@ import { Difficulty } from '../components/form/ideaValidationHooks';
 export interface FFIdea {
     PK?: string;
     name?: string;
+    oldName?: string;
     system: string;
     beans: number;
     difficulty: Difficulty;

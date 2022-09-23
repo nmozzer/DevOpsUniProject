@@ -1,5 +1,5 @@
 import { Paper, Box, Typography, Button, TextField, RadioGroup, FormControlLabel, Radio } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { apiCall, FFIdea } from '../../api/client';
 import IdeaFormComponent from '../form/IdeaFormComponent';
 import {
@@ -35,6 +35,7 @@ const ModalForm = ({ type, ffIdea, setOpen }: ModalFormProps) => {
     }
 
     const { name, setName, nameIsValid } = useValidateName(existingName || '');
+    const { name: oldName, setName: setOldName } = useValidateName('');
     const { system, setSystem, systemIsValid } = useValidateSystem(existingSystem || '');
     const { beans, setBeans, beansIsValid } = useValidateBeans(existingBeans || 2);
     const { difficulty, setDifficulty } = useValidateDifficulty(existingDifficulty || 'Easy');
@@ -42,6 +43,10 @@ const ModalForm = ({ type, ffIdea, setOpen }: ModalFormProps) => {
     const { assigned, setAssigned } = useValidateAssigned(existingAssigned || false);
 
     const [error, setError] = React.useState('');
+
+    useEffect(() => {
+        setOldName(oldName);
+    });
 
     const isValid =
         !nameIsValid ||
@@ -61,6 +66,7 @@ const ModalForm = ({ type, ffIdea, setOpen }: ModalFormProps) => {
             beans,
             difficulty,
             assigned,
+            oldName,
         };
         try {
             type === AddOrUpdate.ADD ? await apiCall('/addIdea', ffIdea) : await apiCall('/updateIdea', ffIdea);
