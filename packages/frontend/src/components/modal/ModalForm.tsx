@@ -35,7 +35,7 @@ const ModalForm = ({ type, ffIdea, setOpen }: ModalFormProps) => {
     }
 
     const { name, setName, nameIsValid } = useValidateName(existingName || '');
-    const { name: oldName, setName: setOldName } = useValidateName('');
+    const { name: oldName } = useValidateName(existingName || '');
     const { system, setSystem, systemIsValid } = useValidateSystem(existingSystem || '');
     const { beans, setBeans, beansIsValid } = useValidateBeans(existingBeans || 2);
     const { difficulty, setDifficulty } = useValidateDifficulty(existingDifficulty || 'Easy');
@@ -44,9 +44,6 @@ const ModalForm = ({ type, ffIdea, setOpen }: ModalFormProps) => {
 
     const [error, setError] = React.useState('');
 
-    useEffect(() => {
-        setOldName(oldName);
-    });
 
     const isValid =
         !nameIsValid ||
