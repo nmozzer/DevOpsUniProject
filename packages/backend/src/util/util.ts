@@ -21,5 +21,6 @@ export const parseSchema = (schema: z.Schema, body?: string) => {
     }
     const parsedBody = JSON.parse(body);
 
-    return schema.safeParse(parsedBody);
+    schema.safeParse(parsedBody);
+    return parsedBody;
 };
