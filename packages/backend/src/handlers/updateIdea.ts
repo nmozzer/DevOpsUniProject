@@ -6,7 +6,7 @@ export const updateIdea = async (request: AddOrUpdateRequest, dbClient: DynamoDB
     const { oldName, name, system, beans, difficulty, creator, assigned } = request;
 
     const query: ExecuteStatementCommandInput = {
-        Statement: `UPDATE "${tableName}" SET 'PK'=? SET SET 'system'=? SET 'beans'=? SET 'difficulty'=? SET 'creator'=? SET 'assigned'=? where 'PK'=?`,
+        Statement: `UPDATE "${tableName}" SET 'PK'=? SET 'system'=? SET 'beans'=? SET 'difficulty'=? SET 'creator'=? SET 'assigned'=? where 'PK'=?`,
         Parameters: [
             { S: name },
             { S: system },
