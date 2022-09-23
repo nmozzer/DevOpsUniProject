@@ -3,11 +3,19 @@ import { AddOrUpdateRequest } from '../types';
 import { successResponse } from '../util/apiResponses';
 
 export const updateIdea = async (request: AddOrUpdateRequest, dbClient: DynamoDBDocumentClient, tableName: string) => {
-    const { name, system, beans, difficulty, creator, assigned } = request;
+    const { oldName, name, system, beans, difficulty, creator, assigned } = request;
 
     const query: ExecuteStatementCommandInput = {
         Statement: `UPDATE "${tableName}" SET {'PK':?, 'system':?, 'beans':?, 'difficulty':?, 'creator':?, 'assigned':?} where PK=?`,
-        Parameters: [{ PK: name }, { system }, { beans }, { difficulty }, { creator }, { assigned }, { PK: name }],
+        Parameters: [
+            { S: name },
+            { S: system },
+            { S: beans.toString() },
+            { S: difficulty },
+            { S: creator },
+            { S: assigned.toString() },
+            { S: oldName },
+        ],
     };
 
     const response = await dbClient.send(new ExecuteStatementCommand(query));

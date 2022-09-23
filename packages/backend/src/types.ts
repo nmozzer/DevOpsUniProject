@@ -6,6 +6,7 @@ export const deleteSchema = z.object({
 export const addOrUpdateSchema = z
     .object({
         name: z.string(),
+        oldName: z.string().optional(),
         system: z.string(),
         beans: z.number(),
         difficulty: z.string(),
