@@ -52,7 +52,7 @@ const AddOrUpdateModal: React.FC<ModalProps> = ({ type, ffIdea }: ModalProps) =>
                 aria-describedby="Add or Modify the details here to add/change an idea"
             >
                 <Box sx={style} className="w-3/4">
-                    <ModalForm {...{ type, ffIdea }} />
+                    <ModalForm {...{ type, ffIdea, setOpen }} />
                 </Box>
             </Modal>
         </div>

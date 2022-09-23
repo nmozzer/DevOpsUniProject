@@ -1,6 +1,5 @@
 import { Paper, Box, Typography, Button, TextField, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { apiCall, FFIdea } from '../../api/client';
 import IdeaFormComponent from '../form/IdeaFormComponent';
 import {
@@ -14,15 +13,26 @@ import {
 } from '../form/ideaValidationHooks';
 import { AddOrUpdate, ModalProps } from './AddOrUpdateModal';
 
-const ModalForm = ({ type, ffIdea }: ModalProps) => {
-    const {
-        name: existingName,
-        system: existingSystem,
-        difficulty: existingDifficulty,
-        creator: existingCreator,
-        assigned: existingAssigned,
-        beans: existingBeans,
-    } = ffIdea!;
+interface ModalFormProps extends ModalProps {
+    setOpen: (_: boolean) => void;
+}
+
+const ModalForm = ({ type, ffIdea, setOpen }: ModalFormProps) => {
+    let existingName;
+    let existingSystem;
+    let existingDifficulty;
+    let existingCreator;
+    let existingAssigned;
+    let existingBeans;
+    if (ffIdea) {
+        const { name, system, difficulty, creator, assigned, beans } = ffIdea;
+        existingName = name;
+        existingSystem = system;
+        existingDifficulty = difficulty;
+        existingCreator = creator;
+        existingAssigned = assigned;
+        existingBeans = beans;
+    }
 
     const { name, setName, nameIsValid } = useValidateName(existingName || '');
     const { system, setSystem, systemIsValid } = useValidateSystem(existingSystem || '');
@@ -43,8 +53,6 @@ const ModalForm = ({ type, ffIdea }: ModalProps) => {
         !creatorIsValid ||
         creator.length === 0;
 
-    const navigate = useNavigate();
-
     const addOrUpdateClick = async () => {
         const ffIdea: FFIdea = {
             name,
@@ -56,6 +64,8 @@ const ModalForm = ({ type, ffIdea }: ModalProps) => {
         };
         try {
             type === AddOrUpdate.ADD ? await apiCall('/addIdea', ffIdea) : await apiCall('/updateIdea', ffIdea);
+            alert('Action Successful');
+            setOpen(false);
         } catch (err: any) {
             alert(err.message);
             setError(err.message);

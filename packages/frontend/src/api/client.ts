@@ -27,7 +27,8 @@ export const apiCall = async (route: string, body?: FFIdea): Promise<any> => {
         });
         console.log(response?.data, 'RESPONSE');
 
-        return response.data;
+
+        return response?.data;
     } catch (error) {
         throw error;
     }
