@@ -67,9 +67,8 @@ const ModalForm = ({ type, ffIdea, setOpen }: ModalFormProps) => {
         try {
             type === AddOrUpdate.ADD ? await apiCall('/addIdea', ffIdea) : await apiCall('/updateIdea', ffIdea);
             alert('Action Successful');
-            const response = await apiCall('/getAllIdeas');
+            await apiCall('/getAllIdeas');
             setOpen(false);
-            window.location.reload();
         } catch (err: any) {
             alert(err.message);
             setError(err.message);

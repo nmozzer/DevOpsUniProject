@@ -18,7 +18,6 @@
         "amazon-cognito-identity-js": "^5.2.10",
         "axios": "^0.27.2",
         "playwright": "^1.26.0",
-        "puppeteer": "^18.0.3",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-router-dom": "^6.4.0",
