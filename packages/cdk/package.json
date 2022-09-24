@@ -16,7 +16,7 @@
         "test-integration": "jest",
         "cdk": "cdk",
         "lint": "eslint -c .eslintrc.json --format stylish && prettier --check '{lib,tst}/**/*.ts'",
-        "lint-fix": "eslint --fix -c .eslintrc --format stylish && prettier --write '{lib,tst}/**/*.ts'",
+        "lint-fix": "eslint --fix -c .eslintrc.json --format stylish && prettier --write '{lib,tst}/**/*.ts'",
         "ci": "npm ci"
     },
     "devDependencies": {

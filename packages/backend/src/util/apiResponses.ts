@@ -23,15 +23,12 @@ export const unAuthorizedResponse = (): APIGatewayProxyStructuredResultV2 => {
     };
 };
 
-
-export const errorResponse = (error: Error):APIGatewayProxyStructuredResultV2 => {
+export const errorResponse = (error: Error): APIGatewayProxyStructuredResultV2 => {
     return {
-        statusCode:500,
+        statusCode: 500,
         headers: {
             'Content-Type': 'application/json',
         },
-        body: `Something went wrong: ${error}`
-    }
-}
-
-
+        body: `Something went wrong: ${error}`,
+    };
+};

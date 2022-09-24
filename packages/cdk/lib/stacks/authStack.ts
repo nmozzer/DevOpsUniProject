@@ -61,4 +61,3 @@ export class AuthStack extends cdk.Stack {
         });
     }
 }
- 
