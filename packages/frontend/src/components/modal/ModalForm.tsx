@@ -1,5 +1,5 @@
 import { Paper, Box, Typography, Button, TextField, RadioGroup, FormControlLabel, Radio } from '@mui/material';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { apiCall, FFIdea } from '../../api/client';
 import IdeaFormComponent from '../form/IdeaFormComponent';
 import {
@@ -88,20 +88,6 @@ const ModalForm = ({ type, ffIdea, setOpen }: ModalFormProps) => {
             <Typography variant="h4">Add Idea</Typography>
         ) : (
             <Typography variant="h4">Update Idea</Typography>
-        );
-    };
-
-    const AddOrUpdateNameComponent = ({ type }: { type: AddOrUpdate }) => {
-        return type === AddOrUpdate.ADD ? (
-            <IdeaFormComponent
-                validLabel={'Funky Friday Idea Name'}
-                invalidLabel={'Invalid Idea Name'}
-                isValid={nameIsValid}
-                setProp={setName}
-                defaultValue={name}
-            />
-        ) : (
-            <Typography variant="h5">FF Idea Name: {name}</Typography>
         );
     };
 
