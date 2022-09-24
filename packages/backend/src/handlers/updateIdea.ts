@@ -4,7 +4,7 @@ import { AddOrUpdateRequest } from '../types';
 import { successResponse } from '../util/apiResponses';
 
 export const updateIdea = async (request: AddOrUpdateRequest, dbClient: DynamoDBDocumentClient, tableName: string) => {
-    const { oldName, name, system, beans, difficulty, creator, assigned } = request;
+    const { oldName, system, beans, difficulty, creator, assigned } = request;
 
     if (!oldName) {
         throw new Error('Must provide previous PK');
