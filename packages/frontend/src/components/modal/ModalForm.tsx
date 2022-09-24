@@ -92,6 +92,20 @@ const ModalForm = ({ type, ffIdea, setOpen }: ModalFormProps) => {
         );
     };
 
+    const AddOrUpdateNameComponent = ({ type }: { type: AddOrUpdate }) => {
+        return type === AddOrUpdate.ADD ? (
+            <IdeaFormComponent
+                validLabel={'Funky Friday Idea Name'}
+                invalidLabel={'Invalid Idea Name'}
+                isValid={nameIsValid}
+                setProp={setName}
+                defaultValue={name}
+            />
+        ) : (
+            <Typography variant="h5">FF Idea Name: {name}</Typography>
+        );
+    };
+
     return (
         <div className="flex justify-center items-center h-11/12 flex-col">
             <Paper className="w-full p-10">
@@ -100,13 +114,7 @@ const ModalForm = ({ type, ffIdea, setOpen }: ModalFormProps) => {
                 </Box>
                 {/* Name */}
                 <Box className="w-11/12" m={1}>
-                    <IdeaFormComponent
-                        validLabel={'Funky Friday Idea Name'}
-                        invalidLabel={'Invalid Idea Name'}
-                        isValid={nameIsValid}
-                        setProp={setName}
-                        defaultValue={name}
-                    />
+                    <AddOrUpdateNameComponent {...{ type }} />
                 </Box>
                 {/* System */}
                 <Box className="w-11/12" m={1}>
