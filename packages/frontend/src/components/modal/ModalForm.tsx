@@ -113,7 +113,17 @@ const ModalForm = ({ type, ffIdea, setOpen }: ModalFormProps) => {
                 </Box>
                 {/* Name */}
                 <Box className="w-11/12" m={1}>
-                    <AddOrUpdateNameComponent {...{ type }} />
+                    {type === AddOrUpdate.ADD ? (
+                        <IdeaFormComponent
+                            validLabel={'Funky Friday Idea Name'}
+                            invalidLabel={'Invalid Idea Name'}
+                            isValid={nameIsValid}
+                            setProp={setName}
+                            defaultValue={name}
+                        />
+                    ) : (
+                        <Typography variant="h5">FF Idea Name: {name}</Typography>
+                    )}
                 </Box>
                 {/* System */}
                 <Box className="w-11/12" m={1}>

@@ -13,6 +13,7 @@ interface IdeaFormProps {
 export const IdeaFormComponent = ({ validLabel, invalidLabel, isValid, setProp, defaultValue }: IdeaFormProps) => {
     return (
         <TextField
+            key={'input form'}
             fullWidth
             variant="outlined"
             label={isValid ? validLabel : invalidLabel}
